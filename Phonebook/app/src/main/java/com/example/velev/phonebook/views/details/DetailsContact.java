@@ -1,6 +1,11 @@
 package com.example.velev.phonebook.views.details;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,13 +50,19 @@ public class DetailsContact extends AppCompatActivity {
         btnEdit = (ImageButton) this.findViewById(R.id.btn_edit);
         this.showEditDialog();
 
-        // TODO implement call button
         btnCall = (ImageButton) this.findViewById(R.id.btn_call);
         btnCall.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                
+                TextView num = (TextView) findViewById(R.id.tv_phone_number);
+                String number = "tel:" + num.getText().toString().trim();
+                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+                if (ActivityCompat.checkSelfPermission(DetailsContact.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                   // the permission is in manifest the application is useless if not accepted.
+                    return;
+                }
+                startActivity(callIntent);
             }
         });
     }
