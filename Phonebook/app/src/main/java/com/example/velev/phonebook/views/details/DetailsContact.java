@@ -141,7 +141,7 @@ public class DetailsContact extends AppCompatActivity {
         isUpdated = presenter.updateContact(this, id, name, phoneNumber);
 
         if(isUpdated) {
-            Toast.makeText(this, R.string.Contact_is_updated, Toast.LENGTH_LONG);
+            Toast.makeText(this, R.string.Contact_is_updated, Toast.LENGTH_LONG).show();
         }
     }
 

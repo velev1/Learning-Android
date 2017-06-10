@@ -22,6 +22,7 @@ import com.example.velev.phonebook.data.LocalData;
 import com.example.velev.phonebook.data.models.PhoneContact;
 import com.example.velev.phonebook.views.addContact.AddContact;
 import com.example.velev.phonebook.views.details.DetailsContact;
+import com.example.velev.phonebook.views.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,8 @@ public class TabContacts extends Fragment {
     private ContactsPresenter presenter;
     private ImageButton btnOpenAddContactActivity;
     private static final String CONTACT_KEY = "contact_key";
+    private static ContactsAdapter adapter;
+    private static Context context;
 
 
     public TabContacts() {
@@ -43,27 +46,36 @@ public class TabContacts extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_tab_contacts, container, false);
+        if (this.view == null) {
+            this.view = inflater.inflate(R.layout.fragment_tab_contacts, container, false);
         } else {
-            ViewGroup parent = (ViewGroup) view.getParent();
-            parent.removeView(view);
+            ViewGroup parent = (ViewGroup) this.view.getParent();
+            parent.removeView(this.view);
         }
 
         this.presenter = new ContactsPresenter();
-        this.contacts = this.presenter.getItems(view.getContext());
+        context = this.view.getContext();
+        this.contacts = this.presenter.getItems(context);
 
-        ContactsAdapter adapter = new ContactsAdapter(getActivity(), R.layout.fragment_list_view_item, this.contacts);
+        adapter = new ContactsAdapter(getActivity(), R.layout.fragment_list_view_item, this.contacts);
 
-        list_view = (ListView) view.findViewById(R.id.contacts_list);
+        list_view = (ListView) this.view.findViewById(R.id.contacts_list);
         list_view.setAdapter(adapter);
 
         openDetailsActivity();
 
-        btnOpenAddContactActivity = (ImageButton) view.findViewById(R.id.btn_open_add_contact_activity);
+        btnOpenAddContactActivity = (ImageButton) this.view.findViewById(R.id.btn_open_add_contact_activity);
         openAddContactActivity();
 
-        return view;
+        return this.view;
+    }
+
+    public void refreshView() {
+        this.presenter = new ContactsPresenter();
+        this.contacts = this.presenter.getItems(context);
+        adapter.clear();
+        adapter.addAll(this.contacts);
+        adapter.notifyDataSetChanged();
     }
 
     private void openAddContactActivity() {
