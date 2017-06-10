@@ -1,5 +1,6 @@
 package com.example.velev.phonebook.views.addContact;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.widget.Toast;
 import com.example.velev.phonebook.R;
 import com.example.velev.phonebook.data.ContactsDataProvider;
 import com.example.velev.phonebook.data.models.PhoneContact;
+import com.example.velev.phonebook.views.details.DetailsContact;
+import com.example.velev.phonebook.views.main.MainActivity;
+import com.example.velev.phonebook.views.tabs.TabContacts;
 
 public class AddContact extends AppCompatActivity {
 
@@ -34,6 +38,8 @@ public class AddContact extends AppCompatActivity {
 
                 if(isInserted) {
                     Toast.makeText(AddContact.this, "Contact added", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(AddContact.this, MainActivity.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(AddContact.this, "adding NOT successful", Toast.LENGTH_LONG).show();
                 }

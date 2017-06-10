@@ -36,8 +36,8 @@ public class TabContacts extends Fragment {
     private ContactsPresenter presenter;
     private ImageButton btnOpenAddContactActivity;
     private static final String CONTACT_KEY = "contact_key";
-    private static ContactsAdapter adapter;
-    private static Context context;
+    private ContactsAdapter adapter;
+    private Context context;
 
 
     public TabContacts() {
@@ -54,13 +54,13 @@ public class TabContacts extends Fragment {
         }
 
         this.presenter = new ContactsPresenter();
-        context = this.view.getContext();
-        this.contacts = this.presenter.getItems(context);
+        this.context = this.view.getContext();
+        this.contacts = this.presenter.getItems(this.context);
 
-        adapter = new ContactsAdapter(getActivity(), R.layout.fragment_list_view_item, this.contacts);
+        this.adapter = new ContactsAdapter(getActivity(), R.layout.fragment_list_view_item, this.contacts);
 
         list_view = (ListView) this.view.findViewById(R.id.contacts_list);
-        list_view.setAdapter(adapter);
+        list_view.setAdapter(this.adapter);
 
         openDetailsActivity();
 
@@ -68,14 +68,6 @@ public class TabContacts extends Fragment {
         openAddContactActivity();
 
         return this.view;
-    }
-
-    public void refreshView() {
-        this.presenter = new ContactsPresenter();
-        this.contacts = this.presenter.getItems(context);
-        adapter.clear();
-        adapter.addAll(this.contacts);
-        adapter.notifyDataSetChanged();
     }
 
     private void openAddContactActivity() {
@@ -98,7 +90,6 @@ public class TabContacts extends Fragment {
                         currentContact.getName(),
                         currentContact.getPhoneNumber()
                 };
-                //Toast.makeText(getContext(), bla, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getActivity(), DetailsContact.class);
                 intent.putExtra(CONTACT_KEY, objValues);
                 startActivity(intent);

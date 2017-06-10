@@ -42,8 +42,8 @@ public class ContactsPresenter {
         return items;
     }
 
-    public void refreshAdapter() {
-        this.tabContacts = new TabContacts();
-        this.tabContacts.refreshView();
-    }
+//    public void refreshAdapter() {
+//        this.tabContacts = new TabContacts();
+//        this.tabContacts.refreshView();
+//    }
 }

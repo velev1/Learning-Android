@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.velev.phonebook.R;
+import com.example.velev.phonebook.views.main.MainActivity;
 
 public class DetailsContact extends AppCompatActivity {
 
@@ -84,8 +85,6 @@ public class DetailsContact extends AppCompatActivity {
                 Button btnEdit = (Button) mView.findViewById(R.id.btn_edit);
                 Button btnCancel = (Button) mView.findViewById(R.id.btn_cancel);
 
-
-
                 btnEdit.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
@@ -142,6 +141,8 @@ public class DetailsContact extends AppCompatActivity {
 
         if(isUpdated) {
             Toast.makeText(this, R.string.Contact_is_updated, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(DetailsContact.this, MainActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -150,7 +151,9 @@ public class DetailsContact extends AppCompatActivity {
         this.presenter = new DetailsPresenter();
         int rowsDeleted = 0;
         rowsDeleted = presenter.deleteContact(this, id);
-        String rows = rowsDeleted > 1 ? " rows" : " row";
+        String rows = rowsDeleted > 1 ? " contacts" : " contact";
         Toast.makeText(this, String.valueOf(rowsDeleted).toString() + rows + " deleted", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(DetailsContact.this, MainActivity.class);
+        startActivity(intent);
     }
 }
