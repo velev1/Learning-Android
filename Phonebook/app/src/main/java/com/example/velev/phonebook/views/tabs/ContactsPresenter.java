@@ -17,7 +17,6 @@ public class ContactsPresenter {
     private static final int COL_NAME_INDEX = 1;
     private static final int COL_PHONE_NUMBER_INDEX = 2;
     private ContactsDataProvider dataProvider;
-    private TabContacts tabContacts;
 
     public List<PhoneContact> getItems(Context context) {
 
@@ -42,8 +41,4 @@ public class ContactsPresenter {
         return items;
     }
 
-//    public void refreshAdapter() {
-//        this.tabContacts = new TabContacts();
-//        this.tabContacts.refreshView();
-//    }
 }

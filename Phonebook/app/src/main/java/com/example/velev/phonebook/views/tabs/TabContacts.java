@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,7 @@ public class TabContacts extends Fragment {
 
     private View view;
     private ListView list_view;
+    private EditText etSearch;
     private List<PhoneContact> contacts;
     private ContactsPresenter presenter;
     private ImageButton btnOpenAddContactActivity;
@@ -67,7 +70,50 @@ public class TabContacts extends Fragment {
         btnOpenAddContactActivity = (ImageButton) this.view.findViewById(R.id.btn_open_add_contact_activity);
         openAddContactActivity();
 
+        etSearch = (EditText) view.findViewById(R.id.et_search);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() > 0) {
+                    List<PhoneContact> filteredList = new ArrayList<>();
+                    String textToFind = s.toString();
+                    filteredList = filterContacts(textToFind);
+                    TabContacts.this.adapter.clear();
+                    TabContacts.this.adapter.addAll(filteredList);
+                    TabContacts.this.adapter.notifyDataSetChanged();
+                } else if(s.length() == 0) {
+                    TabContacts.this.adapter.clear();
+                    TabContacts.this.contacts = TabContacts.this.presenter.getItems(TabContacts.this.context);
+                    TabContacts.this.adapter.addAll(TabContacts.this.contacts);
+                    TabContacts.this.adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         return this.view;
+    }
+
+    private List<PhoneContact> filterContacts(String textToFind) {
+        List<PhoneContact> newList = new ArrayList<>();
+        String name;
+        for(int i = 0; i < this.contacts.size(); i++) {
+            name = this.contacts.get(i).getName().toLowerCase();
+            if(name.indexOf(textToFind.toLowerCase())> -1) {
+                newList.add(this.contacts.get(i));
+            }
+        }
+
+        return newList;
     }
 
     private void openAddContactActivity() {
