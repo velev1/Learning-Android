@@ -27,6 +27,8 @@ import com.example.velev.phonebook.views.details.DetailsContact;
 import com.example.velev.phonebook.views.main.MainActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class TabContacts extends Fragment {
@@ -59,6 +61,7 @@ public class TabContacts extends Fragment {
         this.presenter = new ContactsPresenter();
         this.context = this.view.getContext();
         this.contacts = this.presenter.getItems(this.context);
+        sortContactsByName();
 
         this.adapter = new ContactsAdapter(getActivity(), R.layout.fragment_list_view_item, this.contacts);
 
@@ -89,6 +92,9 @@ public class TabContacts extends Fragment {
                 } else if(s.length() == 0) {
                     TabContacts.this.adapter.clear();
                     TabContacts.this.contacts = TabContacts.this.presenter.getItems(TabContacts.this.context);
+
+                    sortContactsByName();
+
                     TabContacts.this.adapter.addAll(TabContacts.this.contacts);
                     TabContacts.this.adapter.notifyDataSetChanged();
                 }
@@ -102,6 +108,15 @@ public class TabContacts extends Fragment {
 
         return this.view;
     }
+
+    private void sortContactsByName() {
+        Collections.sort(TabContacts.this.contacts, new Comparator<PhoneContact>() {
+            public int compare(PhoneContact firstContact, PhoneContact secondContact) {
+                return firstContact.getName().toLowerCase().compareTo(secondContact.getName().toLowerCase());
+            }
+        });
+    }
+
 
     private List<PhoneContact> filterContacts(String textToFind) {
         List<PhoneContact> newList = new ArrayList<>();
