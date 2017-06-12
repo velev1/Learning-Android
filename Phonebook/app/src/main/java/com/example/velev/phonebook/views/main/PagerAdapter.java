@@ -4,9 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.velev.phonebook.views.tabs.TabContacts;
-import com.example.velev.phonebook.views.tabs.TabDailer;
-import com.example.velev.phonebook.views.tabs.TabInfo;
+import com.example.velev.phonebook.views.tabs.contacts.TabContacts;
+import com.example.velev.phonebook.views.tabs.dialer.TabDialer;
+import com.example.velev.phonebook.views.tabs.info.TabInfo;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
@@ -21,8 +21,8 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                TabDailer tabDailer = new TabDailer();
-                return tabDailer;
+                TabDialer tabDialer = new TabDialer();
+                return tabDialer;
             case 1:
                 TabContacts tabContacts = new TabContacts();
                 return tabContacts;

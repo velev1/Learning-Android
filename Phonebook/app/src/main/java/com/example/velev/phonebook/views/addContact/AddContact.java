@@ -9,11 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.velev.phonebook.R;
-import com.example.velev.phonebook.data.ContactsDataProvider;
-import com.example.velev.phonebook.data.models.PhoneContact;
-import com.example.velev.phonebook.views.details.DetailsContact;
 import com.example.velev.phonebook.views.main.MainActivity;
-import com.example.velev.phonebook.views.tabs.TabContacts;
 
 public class AddContact extends AppCompatActivity {
 

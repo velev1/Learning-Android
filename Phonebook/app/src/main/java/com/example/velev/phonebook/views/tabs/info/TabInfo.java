@@ -1,4 +1,4 @@
-package com.example.velev.phonebook.views.tabs;
+package com.example.velev.phonebook.views.tabs.info;
 
 import android.content.Context;
 import android.net.Uri;

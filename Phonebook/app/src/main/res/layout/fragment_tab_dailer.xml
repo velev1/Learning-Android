@@ -2,12 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.tabs.TabDailer">
+    tools:context=".views.tabs.dialer.TabDialer">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        android:id="@+id/dialer_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Dailer" />
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="80dp">
+    </ListView>
 
 </RelativeLayout >
