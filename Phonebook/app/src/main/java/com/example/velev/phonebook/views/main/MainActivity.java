@@ -1,6 +1,5 @@
 package com.example.velev.phonebook.views.main;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -10,11 +9,9 @@ import android.support.v7.widget.Toolbar;
 import com.example.velev.phonebook.R;
 
 public class MainActivity extends AppCompatActivity {
-
     private static final String DIALER = "Dialer";
     private static final String CONTACTS = "Contacts";
     private static final String INFO = "Info";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

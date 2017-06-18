@@ -21,14 +21,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                TabDialer tabDialer = new TabDialer();
-                return tabDialer;
+                return new TabDialer();
             case 1:
-                TabContacts tabContacts = new TabContacts();
-                return tabContacts;
+                return new TabContacts();
             case 2:
-                TabInfo tabInfo = new TabInfo();
-                return tabInfo;
+                return new TabInfo();
             default:
                 return null;
         }

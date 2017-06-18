@@ -30,7 +30,6 @@ public class CallsAdapter extends ArrayAdapter<CallModel>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(resource, parent, false);
 
@@ -38,16 +37,11 @@ public class CallsAdapter extends ArrayAdapter<CallModel>{
         holder.name = (TextView) view.findViewById(R.id.tv_name);
         holder.date = (TextView) view.findViewById(R.id.tv_date);
 
-
         holder.name.setText(calls.get(position).getName());
         holder.date.setText(calls.get(position).getCallDateTime().toString());
 
-
         return view;
     }
-
-
-
 
     private class Holder {
         TextView name;

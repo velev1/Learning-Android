@@ -31,7 +31,6 @@ public class DialerPresenter {
         List<CallModel> calls = new ArrayList<>();
 
         while (cursor.moveToNext()) {
-            //String name, String phoneNumber, Date callDateTime, String duration, CallType callType
             String name = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
             String number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
             String duration = cursor.getString(cursor.getColumnIndex(CallLog.Calls.DURATION));
@@ -56,10 +55,9 @@ public class DialerPresenter {
             calls.add(call);
         }
 
+        cursor.close();
         Collections.reverse(calls);
 
         return calls;
     }
 }
-
-

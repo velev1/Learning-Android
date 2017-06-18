@@ -13,7 +13,6 @@ import com.example.velev.phonebook.data.models.CallModel;
 
 import java.util.List;
 
-
 public class TabDialer extends Fragment {
 
     private View view;
@@ -44,7 +43,6 @@ public class TabDialer extends Fragment {
 
         list_view = (ListView) this.view.findViewById(R.id.dialer_list);
         list_view.setAdapter(this.adapter);
-
 
         return this.view;
     }

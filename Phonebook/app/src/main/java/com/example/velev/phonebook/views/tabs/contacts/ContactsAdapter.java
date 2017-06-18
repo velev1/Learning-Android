@@ -1,8 +1,6 @@
 package com.example.velev.phonebook.views.tabs.contacts;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +42,6 @@ public class ContactsAdapter extends ArrayAdapter<PhoneContact> {
 
         holder.name.setText(contacts.get(position).getName());
         holder.phoneNumber.setText(contacts.get(position).getPhoneNumber());
-
 
         return view;
     }
