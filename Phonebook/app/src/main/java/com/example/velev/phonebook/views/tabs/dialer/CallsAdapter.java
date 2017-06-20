@@ -10,9 +10,10 @@ import android.widget.TextView;
 import com.example.velev.phonebook.R;
 import com.example.velev.phonebook.data.models.CallModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CallsAdapter extends ArrayAdapter<CallModel>{
+public class CallsAdapter extends ArrayAdapter<CallModel> {
 
     private Context context;
     private int resource;
@@ -20,12 +21,14 @@ public class CallsAdapter extends ArrayAdapter<CallModel>{
     private Holder holder;
     private List<CallModel> calls;
 
+
     public CallsAdapter(Context context, int resource, List<CallModel> calls) {
         super(context, resource, calls);
 
         this.context = context;
         this.resource = resource;
         this.calls = calls;
+
     }
 
     @Override

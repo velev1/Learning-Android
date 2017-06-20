@@ -6,11 +6,11 @@ import java.util.Date;
 public class CallModel {
     private String name;
     private String phoneNumber;
-    private Date callDateTime;
+    private String callDateTime;
     private String duration;
     private String callType;
 
-    public CallModel(String name, String phoneNumber, Date callDateTime, String duration, String callType) {
+    public CallModel(String name, String phoneNumber, String callDateTime, String duration, String callType) {
         this.setName(name);
         this.setPhoneNumber(phoneNumber);
         this.setCallDateTime(callDateTime);
@@ -34,11 +34,11 @@ public class CallModel {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getCallDateTime() {
+    public String getCallDateTime() {
         return callDateTime;
     }
 
-    private void setCallDateTime(Date callDateTime) {
+    private void setCallDateTime(String callDateTime) {
         this.callDateTime = callDateTime;
     }
 
