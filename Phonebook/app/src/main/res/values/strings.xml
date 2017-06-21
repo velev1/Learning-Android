@@ -11,4 +11,6 @@
     <string name="edit_contact">Edit contact</string>
     <string name="edit">Edit</string>
     <string name="Contact_is_updated">Contact is updated</string>
+    <string name="label_date">date:</string>
+    <string name="label_duration">duration:</string>
 </resources>

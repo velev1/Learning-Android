@@ -1,9 +1,8 @@
 package com.example.velev.phonebook.data.models;
 
+import java.io.Serializable;
 
-import java.util.Date;
-
-public class CallModel {
+public class CallModel implements Serializable{
     private String name;
     private String phoneNumber;
     private String callDateTime;

@@ -1,6 +1,7 @@
 package com.example.velev.phonebook.views.tabs.dialer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +17,9 @@ import android.widget.Toast;
 
 import com.example.velev.phonebook.R;
 import com.example.velev.phonebook.data.models.CallModel;
+import com.example.velev.phonebook.data.models.PhoneContact;
+import com.example.velev.phonebook.views.callLogDetails.CallLogDetails;
+import com.example.velev.phonebook.views.details.DetailsContact;
 import com.example.velev.phonebook.views.tabs.contacts.TabContacts;
 
 import java.util.ArrayList;
@@ -29,6 +33,8 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class TabDialer extends Fragment {
+
+    private final static String CONTACT_KEY = "contact_key";
 
     private View view;
     private ListView list_view;
@@ -76,16 +82,19 @@ public class TabDialer extends Fragment {
         list_view = (ListView) this.view.findViewById(R.id.dialer_list);
         list_view.setAdapter(this.adapter);
 
+        openCallLogDetails();
+
+        return this.view;
+    }
+
+    private void openCallLogDetails(){
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(TabDialer.this.context,
-                        ((TextView)view.findViewById(R.id.tv_name)).getText().toString(),
-                         Toast.LENGTH_SHORT)
-                        .show();
+                Intent intent = new Intent(getActivity(), CallLogDetails.class);
+                intent.putExtra(CONTACT_KEY, (CallModel)list_view.getAdapter().getItem(position));
+                startActivity(intent);
             }
         });
-
-        return this.view;
     }
 }
