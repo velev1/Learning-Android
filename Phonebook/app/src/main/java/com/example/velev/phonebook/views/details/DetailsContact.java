@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.velev.phonebook.R;
+import com.example.velev.phonebook.data.models.PhoneContact;
 import com.example.velev.phonebook.views.main.MainActivity;
 
 public class DetailsContact extends AppCompatActivity {
@@ -28,22 +29,20 @@ public class DetailsContact extends AppCompatActivity {
     private ImageButton btnDelete;
     private ImageButton btnEdit;
     private DetailsPresenter presenter;
-    private String[] objValues;
+    private PhoneContact currentContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_contact);
 
-        // array that stores the contact row in database (id, name, phoneNumber)
-        this.objValues = new String[3];
-        this.objValues = getIntent().getStringArrayExtra(CONTACT_KEY);
+        this.currentContact = (PhoneContact) getIntent().getSerializableExtra(CONTACT_KEY);
 
         tvName = (TextView) this.findViewById(R.id.tv_name);
-        tvName.setText(objValues[1]);
+        tvName.setText(this.currentContact.getName());
 
         tvPhone = (TextView) this.findViewById(R.id.tv_phone_number);
-        tvPhone.setText(objValues[2]);
+        tvPhone.setText(this.currentContact.getPhoneNumber());
 
         btnDelete = (ImageButton) this.findViewById(R.id.btn_delete);
         this.showDeleteAlert();
@@ -60,7 +59,6 @@ public class DetailsContact extends AppCompatActivity {
                 String number = "tel:" + num.getText().toString().trim();
                 Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
                 if (ActivityCompat.checkSelfPermission(DetailsContact.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                   // the permission is in manifest the application is useless if not accepted.
                     return;
                 }
                 startActivity(callIntent);
@@ -79,8 +77,8 @@ public class DetailsContact extends AppCompatActivity {
 
                 EditText etName = (EditText) mView.findViewById(R.id.et_edit_name);
                 EditText etPhone = (EditText) mView.findViewById(R.id.et_edit_phone);
-                etName.setText(objValues[1]);
-                etPhone.setText(objValues[2]);
+                etName.setText(DetailsContact.this.currentContact.getName());
+                etPhone.setText(DetailsContact.this.currentContact.getPhoneNumber());
 
                 Button btnEdit = (Button) mView.findViewById(R.id.btn_edit);
                 Button btnCancel = (Button) mView.findViewById(R.id.btn_cancel);
@@ -88,7 +86,7 @@ public class DetailsContact extends AppCompatActivity {
                 btnEdit.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-                        String id = objValues[0];
+                        String id = DetailsContact.this.currentContact.getId();
                         String name = ((EditText) mView.findViewById(R.id.et_edit_name)).getText().toString();
                         String phoneNumber = ((EditText) mView.findViewById(R.id.et_edit_phone)).getText().toString();
                         edit(id, name, phoneNumber);
@@ -147,12 +145,12 @@ public class DetailsContact extends AppCompatActivity {
     }
 
     private void delete() {
-        String id = this.objValues[0];
+        String id = this.currentContact.getId();
         this.presenter = new DetailsPresenter();
         int rowsDeleted = 0;
         rowsDeleted = presenter.deleteContact(this, id);
         String rows = rowsDeleted > 1 ? " contacts" : " contact";
-        Toast.makeText(this, String.valueOf(rowsDeleted).toString() + rows + " deleted", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, String.valueOf(rowsDeleted) + rows + " deleted", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(DetailsContact.this, MainActivity.class);
         startActivity(intent);
     }

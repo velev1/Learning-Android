@@ -28,7 +28,6 @@ public class CallsAdapter extends ArrayAdapter<CallModel> {
         this.context = context;
         this.resource = resource;
         this.calls = calls;
-
     }
 
     @Override
@@ -40,8 +39,12 @@ public class CallsAdapter extends ArrayAdapter<CallModel> {
         holder.name = (TextView) view.findViewById(R.id.tv_name);
         holder.date = (TextView) view.findViewById(R.id.tv_date);
 
-        holder.name.setText(calls.get(position).getName());
-        holder.date.setText(calls.get(position).getCallDateTime().toString());
+        if(calls.get(position).getName() != null) {
+            holder.name.setText(calls.get(position).getName());
+        } else {
+            holder.name.setText(calls.get(position).getPhoneNumber());
+        }
+        holder.date.setText(calls.get(position).getCallDateTime());
 
         return view;
     }

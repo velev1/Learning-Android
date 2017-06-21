@@ -94,7 +94,6 @@ public class TabContacts extends Fragment {
         return this.view;
     }
 
-
     private void openAddContactActivity() {
         btnOpenAddContactActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,14 +108,8 @@ public class TabContacts extends Fragment {
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PhoneContact currentContact = (PhoneContact) list_view.getAdapter().getItem(position);
-                String[] objValues = {
-                        currentContact.getId(),
-                        currentContact.getName(),
-                        currentContact.getPhoneNumber()
-                };
                 Intent intent = new Intent(getActivity(), DetailsContact.class);
-                intent.putExtra(CONTACT_KEY, objValues);
+                intent.putExtra(CONTACT_KEY, (PhoneContact)list_view.getAdapter().getItem(position));
                 startActivity(intent);
             }
         });

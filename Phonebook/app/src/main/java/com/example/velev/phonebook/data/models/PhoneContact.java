@@ -1,7 +1,9 @@
 package com.example.velev.phonebook.data.models;
 
 
-public class PhoneContact {
+import java.io.Serializable;
+
+public class PhoneContact implements Serializable{
 
     private String id;
     private String name;

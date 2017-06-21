@@ -6,8 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.velev.phonebook.R;
 import com.example.velev.phonebook.data.models.CallModel;
@@ -31,6 +36,7 @@ public class TabDialer extends Fragment {
     private DialerPresenter presenter;
     private CallsAdapter adapter;
     private Context context;
+    private ProgressBar spinner;
 
     public TabDialer() {
         // Required empty public constructor
@@ -47,10 +53,10 @@ public class TabDialer extends Fragment {
 
         this.presenter = new DialerPresenter();
         this.context = this.view.getContext();
-
-        CallModel callModel = new CallModel("","","Loading...","","");
         this.calls = new ArrayList<>();
-        this.calls.add(callModel);
+
+        this.spinner = (ProgressBar) this.view.findViewById(R.id.spinner);
+        spinner.setVisibility(View.VISIBLE);
 
         this.adapter = new CallsAdapter(getActivity(), R.layout.fragment_call__log, this.calls);
 
@@ -61,6 +67,7 @@ public class TabDialer extends Fragment {
                     @Override
                     public void accept(@NonNull List<CallModel> callModels) throws Exception {
                         TabDialer.this.adapter.clear();
+                        spinner.setVisibility(View.GONE);
                         TabDialer.this.adapter.addAll(callModels);
                         TabDialer.this.adapter.notifyDataSetChanged();
                     }
@@ -68,6 +75,16 @@ public class TabDialer extends Fragment {
 
         list_view = (ListView) this.view.findViewById(R.id.dialer_list);
         list_view.setAdapter(this.adapter);
+
+        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(TabDialer.this.context,
+                        ((TextView)view.findViewById(R.id.tv_name)).getText().toString(),
+                         Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
 
         return this.view;
     }
