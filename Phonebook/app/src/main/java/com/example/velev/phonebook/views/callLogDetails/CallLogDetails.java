@@ -1,6 +1,5 @@
 package com.example.velev.phonebook.views.callLogDetails;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -15,6 +14,7 @@ public class CallLogDetails extends AppCompatActivity {
     private TextView tvCallType;
     private TextView tvDate;
     private TextView tvDuration;
+    private CallLogDetailsPresenter presenter;
 
     private CallModel currentCall;
 
@@ -22,6 +22,8 @@ public class CallLogDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_log_details);
+
+        this.presenter = new CallLogDetailsPresenter();
 
         this.currentCall = (CallModel) getIntent().getSerializableExtra(CONTACT_KEY);
 
@@ -34,10 +36,9 @@ public class CallLogDetails extends AppCompatActivity {
         this.tvDate = (TextView) this.findViewById(R.id.tv_date);
         this.tvDate.setText(this.currentCall.getCallDateTime());
 
-        //TODO parse duration to minutes and seconds
         this.tvDuration = (TextView) this.findViewById(R.id.tv_duration);
-        this.tvDuration.setText(currentCall.getDuration());
-
-
+        this.tvDuration.setText(
+                this.presenter.parseCallDuration(this.currentCall.getDuration())
+        );
     }
 }
