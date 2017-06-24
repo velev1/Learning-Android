@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.velev.phonebook.views.tabs.contacts.TabContacts;
 import com.example.velev.phonebook.views.tabs.dialer.TabDialer;
-import com.example.velev.phonebook.views.tabs.info.TabInfo;
+import com.example.velev.phonebook.views.tabs.groups.TabGroups;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
@@ -25,7 +25,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 return new TabContacts();
             case 2:
-                return new TabInfo();
+                return new TabGroups();
             default:
                 return null;
         }

@@ -11,7 +11,7 @@ import com.example.velev.phonebook.R;
 public class MainActivity extends AppCompatActivity {
     private static final String DIALER = "Dialer";
     private static final String CONTACTS = "Contacts";
-    private static final String INFO = "Info";
+    private static final String GROUPS = "Groups";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(DIALER));
         tabLayout.addTab(tabLayout.newTab().setText(CONTACTS));
-        tabLayout.addTab(tabLayout.newTab().setText(INFO));
+        tabLayout.addTab(tabLayout.newTab().setText(GROUPS));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);

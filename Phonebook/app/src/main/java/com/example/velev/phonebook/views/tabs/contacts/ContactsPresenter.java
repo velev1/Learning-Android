@@ -11,19 +11,63 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.annotations.NonNull;
+
 public class ContactsPresenter {
 
     private static final int COL_ID_INDEX = 0;
     private static final int COL_NAME_INDEX = 1;
     private static final int COL_PHONE_NUMBER_INDEX = 2;
-    private ContactsDataProvider dataProvider;
+    private ContactsDataProvider contacts;
     private List<PhoneContact> items;
 
+    public Observable<List<PhoneContact>> getItems(Context context) {
+        final Context mContext = context;
 
-    public List<PhoneContact> getItems(Context context) {
+        return Observable.create(new ObservableOnSubscribe<List<PhoneContact>>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<List<PhoneContact>> e) throws Exception {
 
-        this.dataProvider = new ContactsDataProvider(context);
-        Cursor result = this.dataProvider.getAllContacts();
+                ContactsPresenter.this.items = new ArrayList<>();
+                ContactsPresenter.this.items = ContactsPresenter.this.getContacts(mContext);
+
+                ContactsPresenter.this.sortContactsByName(ContactsPresenter.this.items);
+                e.onNext(ContactsPresenter.this.items);
+
+                e.onComplete();
+            }
+        });
+    }
+
+    public Observable<List<PhoneContact>> getFilteredContacts(String textToFind, Context context) {
+        final Context mContext = context;
+        final String mText = textToFind;
+        return Observable.create(new ObservableOnSubscribe<List<PhoneContact>>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<List<PhoneContact>> e) throws Exception {
+                List<PhoneContact> oldList = ContactsPresenter.this.getContacts(mContext);
+                List<PhoneContact> newList = new ArrayList<>();
+                String name;
+
+                for (int i = 0; i < oldList.size(); i++) {
+                    name = oldList.get(i).getName().toLowerCase();
+                    if (name.indexOf(mText.toLowerCase()) > -1) {
+                        newList.add(oldList.get(i));
+                    }
+                    e.onNext(newList);
+                }
+
+                e.onComplete();
+            }
+        });
+    }
+
+    private List<PhoneContact> getContacts(Context context) {
+        this.contacts = new ContactsDataProvider(context);
+        Cursor result = this.contacts.getAllContacts();
 
         this.items = new ArrayList<>();
 
@@ -39,21 +83,9 @@ public class ContactsPresenter {
 
         this.sortContactsByName(this.items);
 
+        result.close();
+
         return this.items;
-    }
-
-    public List<PhoneContact> getFilteredContacts(String textToFind, Context context) {
-        List<PhoneContact> newList = new ArrayList<>();
-        List<PhoneContact> oldList = this.getItems(context);
-        String name;
-        for (int i = 0; i < oldList.size(); i++) {
-            name = oldList.get(i).getName().toLowerCase();
-            if (name.indexOf(textToFind.toLowerCase()) > -1) {
-                newList.add(oldList.get(i));
-            }
-        }
-
-        return newList;
     }
 
     private void sortContactsByName(List<PhoneContact> items) {

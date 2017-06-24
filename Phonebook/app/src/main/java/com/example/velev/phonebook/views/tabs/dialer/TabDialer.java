@@ -8,25 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.velev.phonebook.R;
 import com.example.velev.phonebook.data.models.CallModel;
-import com.example.velev.phonebook.data.models.PhoneContact;
 import com.example.velev.phonebook.views.callLogDetails.CallLogDetails;
-import com.example.velev.phonebook.views.details.DetailsContact;
-import com.example.velev.phonebook.views.tabs.contacts.TabContacts;
+
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
