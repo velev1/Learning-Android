@@ -10,7 +10,7 @@ public class GroupModel {
         this.setName(name);
     }
 
-    public GroupModel(String name, String id) {
+    public GroupModel(String id, String name) {
         this.setName(name);
         this.setId(id);
     }

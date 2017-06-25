@@ -13,4 +13,5 @@
     <string name="Contact_is_updated">Contact is updated</string>
     <string name="label_date">date:</string>
     <string name="label_duration">duration:</string>
+    <string name="create_group">Create Group</string>
 </resources>

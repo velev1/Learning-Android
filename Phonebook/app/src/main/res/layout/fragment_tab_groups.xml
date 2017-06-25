@@ -3,11 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.tabs.groups.TabGroups">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="6dp">
+
 
     <ListView
         android:id="@+id/lv_groups"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
+
+
+    <ImageButton
+        android:id="@+id/btn_open_create_group_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_create_group"
+        android:background = "@drawable/rounded_button"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:padding="8dp"/>
+
+</RelativeLayout>
 
 </FrameLayout>
