@@ -21,7 +21,7 @@ public class ContactsPresenter {
     private static final int COL_ID_INDEX = 0;
     private static final int COL_NAME_INDEX = 1;
     private static final int COL_PHONE_NUMBER_INDEX = 2;
-    private ContactsDataProvider contacts;
+    private ContactsDataProvider contactsData;
     private List<PhoneContact> items;
 
     public Observable<List<PhoneContact>> getItems(Context context) {
@@ -66,8 +66,8 @@ public class ContactsPresenter {
     }
 
     private List<PhoneContact> getContacts(Context context) {
-        this.contacts = new ContactsDataProvider(context);
-        Cursor result = this.contacts.getAllContacts();
+        this.contactsData = new ContactsDataProvider(context);
+        Cursor result = this.contactsData.getAllContacts();
 
         this.items = new ArrayList<>();
 
