@@ -16,11 +16,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.velev.phonebook.PhoneBookApplication;
 import com.example.velev.phonebook.R;
 import com.example.velev.phonebook.data.models.PhoneContact;
 import com.example.velev.phonebook.views.main.MainActivity;
 
-public class DetailsContact extends AppCompatActivity {
+import javax.inject.Inject;
+
+public class DetailsContact extends AppCompatActivity implements DetailsContactContract.View{
+
+    @Inject
+    public DetailsContactContract.Presenter presenter;
 
     private static final String CONTACT_KEY = "contact_key";
     private TextView tvName;
@@ -28,7 +34,6 @@ public class DetailsContact extends AppCompatActivity {
     private ImageButton btnCall;
     private ImageButton btnDelete;
     private ImageButton btnEdit;
-    private DetailsPresenter presenter;
     private PhoneContact currentContact;
 
     @Override
@@ -37,6 +42,8 @@ public class DetailsContact extends AppCompatActivity {
         setContentView(R.layout.activity_details_contact);
 
         this.currentContact = (PhoneContact) getIntent().getSerializableExtra(CONTACT_KEY);
+
+        this.inject();
 
         tvName = (TextView) this.findViewById(R.id.tv_name);
         tvName.setText(this.currentContact.getName());
@@ -66,7 +73,8 @@ public class DetailsContact extends AppCompatActivity {
         });
     }
 
-    private void showEditDialog() {
+    @Override
+    public void showEditDialog() {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +97,7 @@ public class DetailsContact extends AppCompatActivity {
                         String id = DetailsContact.this.currentContact.getId();
                         String name = ((EditText) mView.findViewById(R.id.et_edit_name)).getText().toString();
                         String phoneNumber = ((EditText) mView.findViewById(R.id.et_edit_phone)).getText().toString();
-                        edit(id, name, phoneNumber);
+                        onEdit(id, name, phoneNumber);
                     }
                 });
                 btnCancel.setOnClickListener(new View.OnClickListener(){
@@ -104,7 +112,8 @@ public class DetailsContact extends AppCompatActivity {
         });
     }
 
-    private void showDeleteAlert() {
+    @Override
+    public void showDeleteAlert() {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +123,7 @@ public class DetailsContact extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                delete();
+                                onDelete();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -131,10 +140,9 @@ public class DetailsContact extends AppCompatActivity {
         });
     }
 
-    private void edit(String id, String name, String phoneNumber) {
+    @Override
+    public void onEdit(String id, String name, String phoneNumber) {
         boolean isUpdated = false;
-
-        this.presenter = new DetailsPresenter();
         isUpdated = presenter.updateContact(this, id, name, phoneNumber);
 
         if(isUpdated) {
@@ -144,14 +152,25 @@ public class DetailsContact extends AppCompatActivity {
         }
     }
 
-    private void delete() {
+    @Override
+    public void onDelete() {
         String id = this.currentContact.getId();
-        this.presenter = new DetailsPresenter();
         int rowsDeleted = 0;
         rowsDeleted = presenter.deleteContact(this, id);
         String rows = rowsDeleted > 1 ? " contacts" : " contact";
         Toast.makeText(this, String.valueOf(rowsDeleted) + rows + " deleted", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(DetailsContact.this, MainActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void setPresenter(DetailsContactContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    private void inject() {
+        ((PhoneBookApplication)this.getApplication())
+                .getComponent()
+                .inject(this);
     }
 }

@@ -4,9 +4,23 @@ import android.content.Context;
 
 import com.example.velev.phonebook.data.DataProvider;
 
-public class DetailsPresenter {
+import javax.inject.Inject;
 
+public class DetailsPresenter implements DetailsContactContract.Presenter{
+
+    private final DetailsContactContract.View view;
     private DataProvider dataProvider;
+
+    @Inject
+    public DetailsPresenter(DetailsContactContract.View view){
+        this.view = view;
+        this.getView().setPresenter(this);
+    }
+
+    @Override
+    public DetailsContactContract.View getView() {
+        return this.view;
+    }
 
     public Integer deleteContact(Context context, String id) {
         this.dataProvider = new DataProvider(context);
@@ -20,5 +34,4 @@ public class DetailsPresenter {
         isUpdated = dataProvider.updateContact(id, name, phoneNumber);
         return isUpdated;
     }
-
 }

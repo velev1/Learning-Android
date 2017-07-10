@@ -2,6 +2,8 @@ package com.example.velev.phonebook;
 
 import android.app.Application;
 
+import com.example.velev.phonebook.views.details.DetailsContact;
+import com.example.velev.phonebook.views.details.DetailsContactsModule;
 import com.example.velev.phonebook.views.tabs.contacts.ContactsModule;
 import com.example.velev.phonebook.views.tabs.contacts.TabContacts;
 import com.example.velev.phonebook.views.tabs.dialer.DialerModule;
@@ -31,13 +33,16 @@ public class PhoneBookApplication extends Application {
     @Component(modules = {
             ContactsModule.class,
             DialerModule.class,
-            GroupsModule.class})
+            GroupsModule.class,
+            DetailsContactsModule.class})
     public interface ApplicationComponent {
         void inject(TabContacts tabContacts);
 
         void inject(TabDialer tabDialer);
 
         void inject(TabGroups tabGroups);
+
+        void inject(DetailsContact detailsContact);
     }
 
 
