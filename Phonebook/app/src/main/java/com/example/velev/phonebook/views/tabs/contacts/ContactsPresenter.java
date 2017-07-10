@@ -11,19 +11,35 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.annotations.NonNull;
 
-public class ContactsPresenter {
+public class ContactsPresenter implements ContactsContract.Presenter{
 
     private static final int COL_ID_INDEX = 0;
     private static final int COL_NAME_INDEX = 1;
     private static final int COL_PHONE_NUMBER_INDEX = 2;
     private ContactsDataProvider contactsData;
     private List<PhoneContact> items;
+    private final ContactsContract.View view;
 
+    @Inject
+    public ContactsPresenter(ContactsContract.View view) {
+        // TODO inject data
+        this.view = view;
+        this.getView().setPresenter(this);
+    }
+
+    @Override
+    public ContactsContract.View getView() {
+        return this.view;
+    }
+
+    @Override
     public Observable<List<PhoneContact>> getItems(Context context) {
         final Context mContext = context;
 
@@ -42,6 +58,7 @@ public class ContactsPresenter {
         });
     }
 
+    @Override
     public Observable<List<PhoneContact>> getFilteredContacts(String textToFind, Context context) {
         final Context mContext = context;
         final String mText = textToFind;

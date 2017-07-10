@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.example.velev.phonebook.PhoneBookApplication;
 import com.example.velev.phonebook.R;
 import com.example.velev.phonebook.data.models.PhoneContact;
 import com.example.velev.phonebook.views.addContact.AddContact;
@@ -22,19 +23,25 @@ import com.example.velev.phonebook.views.details.DetailsContact;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.annotations.NonNull;
 
 
-public class TabContacts extends Fragment {
+public class TabContacts extends Fragment implements ContactsContract.View{
+
+    @Inject
+    public ContactsContract.Presenter presenter;
+
+    private static final String CONTACT_KEY = "contact_key";
+
     private View view;
     private ListView list_view;
     private EditText etSearch;
-    private ContactsPresenter presenter;
     private ImageButton btnOpenAddContactActivity;
-    private static final String CONTACT_KEY = "contact_key";
     private ContactsAdapter adapter;
     private Context context;
     private List<PhoneContact> contacts;
@@ -51,8 +58,8 @@ public class TabContacts extends Fragment {
             ViewGroup parent = (ViewGroup) this.view.getParent();
             parent.removeView(this.view);
         }
-
-        this.presenter = new ContactsPresenter();
+        this.inject();
+        //this.presenter = new ContactsPresenter();
         this.context = this.view.getContext();
 
 
@@ -96,6 +103,34 @@ public class TabContacts extends Fragment {
         return this.view;
     }
 
+    @Override
+    public void setPresenter(ContactsContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void openAddContactActivity() {
+        btnOpenAddContactActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddContact.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void openDetailsActivity() {
+        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), DetailsContact.class);
+                intent.putExtra(CONTACT_KEY, (PhoneContact) list_view.getAdapter().getItem(position));
+                startActivity(intent);
+            }
+        });
+    }
+
     private void getFilteredAdapter(String textToFind) {
         this.presenter.getFilteredContacts(textToFind, this.context)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -124,24 +159,9 @@ public class TabContacts extends Fragment {
                 });
     }
 
-    private void openAddContactActivity() {
-        btnOpenAddContactActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddContact.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void openDetailsActivity() {
-        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), DetailsContact.class);
-                intent.putExtra(CONTACT_KEY, (PhoneContact) list_view.getAdapter().getItem(position));
-                startActivity(intent);
-            }
-        });
+    private void inject() {
+        ((PhoneBookApplication)(getActivity().getApplication()))
+                .getComponent()
+                .inject(this);
     }
 }

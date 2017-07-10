@@ -6,7 +6,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
+import com.example.velev.phonebook.PhoneBookApplication;
 import com.example.velev.phonebook.R;
+import com.example.velev.phonebook.views.tabs.contacts.ContactsContract;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
     private static final String DIALER = "Dialer";
