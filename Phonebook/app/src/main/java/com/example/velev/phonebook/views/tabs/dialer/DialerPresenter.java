@@ -13,63 +13,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.annotations.NonNull;
 
-public class DialerPresenter {
+public class DialerPresenter implements DialerContract.Presenter{
 
-    // this is the synchronous method which retrieve the callLog
-    public List<CallModel> getCallLogDetails(Context context) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            return null;
-        }
-        String[] strFields = {
-                CallLog.Calls.CACHED_NAME,
-                CallLog.Calls.NUMBER,
-                CallLog.Calls.TYPE,
-                CallLog.Calls.DATE,
-                CallLog.Calls.DURATION
-        };
+    private DialerContract.View view;
 
-        Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI, strFields ,
-                null, null, null);
-        List<CallModel> calls = new ArrayList<>();
-
-        cursor.moveToLast();
-        cursor.moveToNext();
-        while (cursor.moveToPrevious()) {
-            String name = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
-            String number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
-            String duration = cursor.getString(cursor.getColumnIndex(CallLog.Calls.DURATION));
-            String callDate = cursor.getString(cursor.getColumnIndex(CallLog.Calls.DATE));
-            Date date = new Date(Long.valueOf(callDate));
-            String indexCallType = cursor.getString(cursor.getColumnIndex(CallLog.Calls.TYPE));
-
-            String callType = "";
-            switch (indexCallType) {
-                case "1":
-                    callType = "INCOMING";
-                    break;
-                case "2":
-                    callType = "OUTGOING";
-                    break;
-                case "3":
-                    callType = "MISSED";
-                    break;
-            }
-
-            CallModel call = new CallModel(name, number, date.toString(), duration, callType);
-            calls.add(call);
-        }
-
-        cursor.close();
-        //Collections.reverse(calls);
-        return calls;
+    @Inject
+    public DialerPresenter(DialerContract.View view) {
+        this.view = view;
+        this.getView().setPresenter(this);
     }
 
+    @Override
+    public DialerContract.View getView() {
+        return this.view;
+    }
+
+    @Override
     public Observable<List<CallModel>> getCallLog(Context context) {
         final Context mContext = context;
         return Observable.create(new ObservableOnSubscribe<List<CallModel>>() {

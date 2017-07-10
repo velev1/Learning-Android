@@ -2,6 +2,7 @@ package com.example.velev.phonebook.views.tabs.contacts;
 
 import android.content.Context;
 
+import com.example.velev.phonebook.BasePresenter;
 import com.example.velev.phonebook.BaseView;
 import com.example.velev.phonebook.data.models.PhoneContact;
 
@@ -11,16 +12,14 @@ import io.reactivex.Observable;
 
 public interface ContactsContract {
 
-    public interface View extends BaseView<ContactsContract.Presenter>{
+    interface View extends BaseView<ContactsContract.Presenter>{
 
         void openAddContactActivity();
 
         void openDetailsActivity();
     }
 
-    public interface Presenter {
-
-        ContactsContract.View getView();
+    interface Presenter extends BasePresenter<ContactsContract.View>{
 
         Observable<List<PhoneContact>> getItems(Context context);
 

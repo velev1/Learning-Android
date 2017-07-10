@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.example.velev.phonebook.PhoneBookApplication;
 import com.example.velev.phonebook.R;
 import com.example.velev.phonebook.data.models.CallModel;
 import com.example.velev.phonebook.views.callLogDetails.CallLogDetails;
@@ -19,19 +20,23 @@ import com.example.velev.phonebook.views.callLogDetails.CallLogDetails;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class TabDialer extends Fragment {
+public class TabDialer extends Fragment implements DialerContract.View {
+
+    @Inject
+    public DialerContract.Presenter presenter;
 
     private final static String CONTACT_KEY = "contact_key";
 
     private View view;
     private ListView list_view;
     private List<CallModel> calls;
-    private DialerPresenter presenter;
     private CallsAdapter adapter;
     private Context context;
     private ProgressBar spinner;
@@ -49,7 +54,7 @@ public class TabDialer extends Fragment {
             parent.removeView(this.view);
         }
 
-        this.presenter = new DialerPresenter();
+        this.inject();
         this.context = this.view.getContext();
         this.calls = new ArrayList<>();
 
@@ -79,7 +84,8 @@ public class TabDialer extends Fragment {
         return this.view;
     }
 
-    private void openCallLogDetails(){
+    @Override
+    public void openCallLogDetails(){
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -88,5 +94,16 @@ public class TabDialer extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void setPresenter(DialerContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    private void inject() {
+        ((PhoneBookApplication)(getActivity().getApplication()))
+                .getComponent()
+                .inject(this);
     }
 }
