@@ -6,6 +6,8 @@ import com.example.velev.phonebook.views.tabs.contacts.ContactsModule;
 import com.example.velev.phonebook.views.tabs.contacts.TabContacts;
 import com.example.velev.phonebook.views.tabs.dialer.DialerModule;
 import com.example.velev.phonebook.views.tabs.dialer.TabDialer;
+import com.example.velev.phonebook.views.tabs.groups.GroupsModule;
+import com.example.velev.phonebook.views.tabs.groups.TabGroups;
 
 import dagger.Component;
 
@@ -26,12 +28,16 @@ public class PhoneBookApplication extends Application {
         return component;
     }
 
-    @Component(modules = {ContactsModule.class,
-            DialerModule.class})
+    @Component(modules = {
+            ContactsModule.class,
+            DialerModule.class,
+            GroupsModule.class})
     public interface ApplicationComponent {
         void inject(TabContacts tabContacts);
 
         void inject(TabDialer tabDialer);
+
+        void inject(TabGroups tabGroups);
     }
 
 

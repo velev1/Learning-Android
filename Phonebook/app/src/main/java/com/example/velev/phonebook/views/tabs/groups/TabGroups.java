@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.example.velev.phonebook.PhoneBookApplication;
 import com.example.velev.phonebook.R;
 import com.example.velev.phonebook.data.models.GroupModel;
 import com.example.velev.phonebook.views.createGroup.CreateGroup;
@@ -18,16 +19,21 @@ import com.example.velev.phonebook.views.createGroup.CreateGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class TabGroups extends Fragment {
+public class TabGroups extends Fragment implements GroupsContract.View{
+
+    @Inject
+    public GroupsContract.Presenter presenter;
 
     private View view;
-    private GroupsPresenter presenter;
+    //private GroupsPresenter presenter;
     private GroupsAdapter adapter;
     private Context context;
     private List<GroupModel> groups;
@@ -48,7 +54,8 @@ public class TabGroups extends Fragment {
             parent.removeView(this.view);
         }
 
-        this.presenter = new GroupsPresenter();
+        this.inject();
+        //this.presenter = new GroupsPresenter();
         this.context = getActivity();
         this.groups = new ArrayList<>();
         this.adapter = new GroupsAdapter(this.context, R.layout.fragment_group_list, this.groups);
@@ -67,7 +74,8 @@ public class TabGroups extends Fragment {
         return this.view;
     }
 
-    private void openCreateGroupActivity() {
+    @Override
+    public void openCreateGroupActivity() {
         this.btnOpenCreateGroupActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +85,10 @@ public class TabGroups extends Fragment {
         });
     }
 
+    @Override
+    public void setPresenter(GroupsContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
 
     private void updateAdapter() {
         this.presenter.getAllGroups(this.context)
@@ -92,4 +104,9 @@ public class TabGroups extends Fragment {
                 });
     }
 
+    private void inject() {
+        ((PhoneBookApplication)(getActivity().getApplication()))
+                .getComponent()
+                .inject(this);
+    }
 }

@@ -10,16 +10,30 @@ import com.example.velev.phonebook.data.models.GroupModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.annotations.NonNull;
 
-public class GroupsPresenter {
+public class GroupsPresenter implements GroupsContract.Presenter{
     private static final int COL_ID_INDEX = 0;
     private static final int COL_NAME_INDEX = 1;
+    private final GroupsContract.View view;
 
     private GroupsDataProvider groupsData;
+
+    @Inject
+    public GroupsPresenter(GroupsContract.View view) {
+        this.view = view;
+        this.getView().setPresenter(this);
+    }
+
+    @Override
+    public GroupsContract.View getView() {
+        return this.view;
+    }
 
     public Observable<List<GroupModel>> getAllGroups(Context context) {
         final Context mContext = context;
