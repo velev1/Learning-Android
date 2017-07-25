@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">EventReminder</string>
+
+    <string name="action_delete_item">Item Deleted</string>
+    <string name="action_undo">UNDO</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_event">Create event</string>
+    <string name="show_events">Show events</string>
+    <string name="due_date">due date</string>
+    <string name="remaining_time">remaining time:</string>
+    <string name="starting_on">starting on:</string>
+    <string name="add_description">Add description:</string>
+    <string name="set_time">set time</string>
+    <string name="set_date">set date</string>
+    <string name="description">Description:</string>
+</resources>

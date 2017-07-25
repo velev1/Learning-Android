@@ -1,0 +1,58 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/start_menu_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.velev.eventreminder.views.appStart.StartingMenuView"
+    android:background="@color/colorPrimary"
+    android:padding="8dp">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:background="@color/colorBackground">
+
+        <TextView
+            android:id="@+id/current_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test"
+            />
+
+        <TextView
+            android:id="@+id/current_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@+id/current_date"
+            android:layout_toEndOf="@+id/current_date"
+            style="@style/text_info"
+            android:text="test"
+            />
+
+        <Button
+            android:id="@+id/btn_create_event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create_event"
+            android:layout_below="@+id/current_time"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="25dp"
+            style="@style/btn_primary"/>
+
+        <Button
+            android:id="@+id/btn_show_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/show_events"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/btn_create_event"
+            style="@style/btn_primary"/>
+
+    </RelativeLayout>
+
+</FrameLayout>
