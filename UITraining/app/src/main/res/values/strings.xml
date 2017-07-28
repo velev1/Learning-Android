@@ -6,4 +6,5 @@
     <string name="fab_and_snackbar">Fab and SnackBar</string>
     <string name="show_snackbar">Show SnackBar</string>
     <string name="fab_follows_widget">fab follows widget</string>
+    <string name="test_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in sem non lectus hendrerit ultricies sit amet in odio. Praesent luctus leo quam, at laoreet dui rhoncus ut. Curabitur ex ex, cursus non lorem at, ullamcorper ornare felis. Curabitur malesuada tincidunt tellus. Aliquam erat volutpat. Vestibulum ipsum orci, fringilla non egestas at, pharetra vitae felis. Sed hendrerit enim in fringilla accumsan. Fusce in nulla nunc. Donec egestas et ligula a.</string>
 </resources>
