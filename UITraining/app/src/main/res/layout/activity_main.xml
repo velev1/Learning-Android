@@ -41,6 +41,13 @@
             android:text="@string/fab_follows_widget" />
 
         <Button
+            style="@style/btn_danger"
+            android:id="@+id/btn_collapsing_demo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Collapsing demo"/>
+
+        <Button
             style="@style/btn_info"
             android:id="@+id/btn_open_fragment_activity"
             android:layout_width="wrap_content"

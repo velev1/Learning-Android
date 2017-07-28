@@ -1,5 +1,6 @@
 package com.example.velev.uitraining;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +24,20 @@ public class MainActivity extends AppCompatActivity {
 
         openFabFollowsWidgetDemo();
 
+        openCollapsingToolbarAppbarDemo();
+
         openFragmentDemo();
+    }
+
+    private void openCollapsingToolbarAppbarDemo() {
+        Button btnCollapsingDemo = (Button) findViewById(R.id.btn_collapsing_demo);
+        btnCollapsingDemo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CollapsingToolbarAppbarActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void openFabFollowsWidgetDemo() {

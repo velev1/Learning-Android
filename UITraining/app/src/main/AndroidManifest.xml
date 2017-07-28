@@ -19,7 +19,8 @@
         <activity android:name=".FragmentDemoActivity" />
         <activity android:name=".CardActivity" />
         <activity android:name=".FabSnackBarActivity" />
-        <activity android:name=".FabFollowsWidget"></activity>
+        <activity android:name=".FabFollowsWidget" />
+        <activity android:name=".CollapsingToolbarAppbarActivity"></activity>
     </application>
 
 </manifest>
