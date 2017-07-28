@@ -5,4 +5,5 @@
     <string name="all_clickable">ALL Clickable</string>
     <string name="fab_and_snackbar">Fab and SnackBar</string>
     <string name="show_snackbar">Show SnackBar</string>
+    <string name="fab_follows_widget">fab follows widget</string>
 </resources>

@@ -21,7 +21,21 @@ public class MainActivity extends AppCompatActivity {
 
         openFabSnackBarDemo();
 
+        openFabFollowsWidgetDemo();
+
         openFragmentDemo();
+    }
+
+    private void openFabFollowsWidgetDemo() {
+        Button btnFabFollowsWidget = (Button) findViewById(R.id.btn_fab_follows_widget);
+        btnFabFollowsWidget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, FabFollowsWidget.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void openFabSnackBarDemo() {

@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".FragmentDemoActivity" />
         <activity android:name=".CardActivity" />
-        <activity android:name=".FabSnackBarActivity"></activity>
+        <activity android:name=".FabSnackBarActivity" />
+        <activity android:name=".FabFollowsWidget"></activity>
     </application>
 
 </manifest>
