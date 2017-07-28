@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--<item android:drawable="@color/dangerDark" android:state_pressed="true" />-->
+    <!--<item android:drawable="@color/dangerLight" android:state_focused="true"/>-->
+    <!--<item android:drawable="@color/danger"/>-->
+<!--</selector>-->
+
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:color="@color/dangerDark"
+    tools:targetApi="lollipop">
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/dangerDark" />
+        </shape>
+    </item>
+    <item
+        android:id="@android:id/background"
+        android:drawable="@color/danger" />
+</ripple>

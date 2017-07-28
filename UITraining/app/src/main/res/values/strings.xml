@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">UITraining</string>
+    <string name="dexter_info"><![CDATA[Dexter is a boy genius who has a secret laboratory and is the titular main protagonist of Dexter\'s Laboratory, an animated series that aired on Cartoon Network from 1996-2003. He is voiced by the late Christine Cavanaugh, who also voiced Gosalyn Mallard, Oblina & Chuckie Finster and was also voiced by Candi Milo, who also voiced Nick Dean, Coco, Madame Foster, Ms. Nora Wakeman, Irma Lair, The Flea, Pulgita and Snap.]]></string>
+    <string name="dexter">Dexter</string>
+    <string name="all_clickable">ALL Clickable</string>
+    <string name="fab_and_snackbar">Fab and SnackBar</string>
+    <string name="show_snackbar">Show SnackBar</string>
+</resources>

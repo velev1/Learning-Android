@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.velev.uitraining.MainActivity">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            style="@style/text_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/all_clickable"/>
+
+        <ImageView
+            android:id="@+id/img_dexter"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/dexter"
+            android:contentDescription="@string/dexter"/>
+
+        <Button
+            android:id="@+id/btn_fab_and_snackbar"
+            style="@style/btn_danger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fab_and_snackbar" />
+
+        <Button
+            android:id="@+id/btn_info"
+            style="@style/btn_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Info" />
+
+
+
+        <Button
+            style="@style/btn_info"
+            android:id="@+id/btn_open_fragment_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go to fragment"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_add" />
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
