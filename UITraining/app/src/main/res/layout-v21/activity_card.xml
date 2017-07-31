@@ -18,10 +18,10 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:transitionName="avatar"
                 android:id="@+id/img_avatar"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:scaleType="centerCrop"
                 android:src="@mipmap/dexter"/>
 
             <TextView
