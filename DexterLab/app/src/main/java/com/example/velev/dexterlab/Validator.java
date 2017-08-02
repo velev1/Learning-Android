@@ -27,8 +27,8 @@ public final class Validator {
         Pattern pattern = Pattern.compile("[~#@*+%{}<>\\[\\]|\"\\_^]");
         Matcher matcher = pattern.matcher(input);
 
-        boolean isValid  = matcher.find();
-        if(!isValid) {
+        boolean isMatch  = matcher.find();
+        if(isMatch) {
 
             String invalidSymbols = "[~#@*+%{}<>\\[\\]|\"\\_^]";
             String msg = MessageProvider.INVALID_SYMBOL.getInvalidSymbolMessage(invalidSymbols);
