@@ -10,10 +10,7 @@ import android.widget.TextView;
 import com.example.velev.dexterlab.R;
 import com.example.velev.dexterlab.views.signUp.SignUpActivity;
 
-public class LogInActivity extends AppCompatActivity {
-
-    private static final String username = "dexter";
-    private static final String password = "123456";
+public class LogInActivity extends AppCompatActivity implements LoginContract.View{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +24,7 @@ public class LogInActivity extends AppCompatActivity {
         onSignUp();
     }
 
+    @Override
     public void onSignUp() {
         TextView tvSignUp = (TextView) findViewById(R.id.tv_sign_up);
         tvSignUp.setOnClickListener(new View.OnClickListener() {
@@ -38,6 +36,7 @@ public class LogInActivity extends AppCompatActivity {
         });
     }
 
+    @Override
     public void onLogIn() {
 
         Button btnLogin = (Button) findViewById(R.id.btn_login);
