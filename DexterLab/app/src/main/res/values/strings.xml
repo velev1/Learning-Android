@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DexterLab</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="screen_background">screen background</string>
+</resources>

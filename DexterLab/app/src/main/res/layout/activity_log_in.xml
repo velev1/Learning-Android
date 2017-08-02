@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.velev.dexterlab.views.login.LogInActivity">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/screen_background"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background" />
+
+    <EditText
+        android:id="@+id/et_username"
+        style="@style/et_box"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:hint="@string/username" />
+
+    <EditText
+        android:id="@+id/et_password"
+        style="@style/et_box"
+        android:layout_below="@id/et_username"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/password"
+        android:inputType="textPassword" />
+
+    <FrameLayout
+        android:id="@+id/container_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_password"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/btn_success"
+            android:text="@string/log_in" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/container_btn"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/tv_sign_up"
+            style="@style/text_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="@string/sign_up" />
+
+    </FrameLayout>
+
+</RelativeLayout>
