@@ -21,7 +21,6 @@
                 android:id="@+id/img_avatar"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:scaleType="centerCrop"
                 android:src="@mipmap/dexter"/>
 
             <TextView
@@ -34,6 +33,7 @@
                 android:layout_toEndOf="@id/img_avatar"/>
 
             <TextView
+                style="@style/text_paragraph"
                 android:id="@+id/tv_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

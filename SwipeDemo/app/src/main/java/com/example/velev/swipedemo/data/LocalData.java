@@ -22,6 +22,17 @@ public class LocalData {
         return this.students;
     }
 
+    public void deleteStudent(Student student, int position) {
+        if(this.students.size() > 0) {
+            this.students.remove(position);
+        }
+    }
+
+    public void addStudent(Student student) {
+        this.students.add(student);
+    }
+
+
 
     private void fillFakeData(){
         for (int i = 0; i < 25; i++) {
@@ -32,7 +43,6 @@ public class LocalData {
             this.students.add(student);
         }
     }
-
 
     private String nameGenerator() {
         String[] names = {"Georgi Zahariev", "Vlado Todorov", "Cveti Pencheva", "Dimityr grigorov", "Iliya Velev",

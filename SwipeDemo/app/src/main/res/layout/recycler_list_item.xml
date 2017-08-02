@@ -1,38 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_first_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <include layout="@layout/swipe_row_item"/>
 
-    <TextView
-        android:id="@+id/tv_last_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/tv_first_name"
-        android:layout_toEndOf="@+id/tv_first_name"/>
+    <include layout="@layout/regular_row_item"/>
 
-    <TextView
-        android:id="@+id/lbl_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_first_name"
-        android:text="@string/number"/>
+</FrameLayout>
+    <!--<TextView-->
+        <!--android:id="@+id/tv_first_name"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
 
-    <TextView
-        android:id="@+id/tv_fac_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/lbl_number"
-        android:layout_toEndOf="@+id/lbl_number"
-        android:layout_alignBaseline="@+id/lbl_number"/>
+    <!--<TextView-->
+        <!--android:id="@+id/tv_last_name"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_toRightOf="@+id/tv_first_name"-->
+        <!--android:layout_toEndOf="@+id/tv_first_name"/>-->
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:layout_below="@+id/tv_fac_number"
-        android:background="#ccc" />
-</RelativeLayout>
+    <!--<TextView-->
+        <!--android:id="@+id/lbl_number"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/tv_first_name"-->
+        <!--android:text="@string/number"/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_fac_number"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_toRightOf="@+id/lbl_number"-->
+        <!--android:layout_toEndOf="@+id/lbl_number"-->
+        <!--android:layout_alignBaseline="@+id/lbl_number"/>-->
+
+    <!--<View-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="1dip"-->
+        <!--android:layout_below="@+id/tv_fac_number"-->
+        <!--android:background="#ccc" />-->
+<!--</RelativeLayout>-->
