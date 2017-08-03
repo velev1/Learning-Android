@@ -7,9 +7,12 @@ package com.example.velev.dexterlab.views.login;
 public interface LoginContract {
 
     interface View {
+
         void onSignUp();
 
         void onLogIn();
+
+        void openLabActivity();
     }
 
     interface ViewModel {

@@ -6,4 +6,6 @@
     <string name="sign_up">Sign Up</string>
     <string name="screen_background">screen background</string>
     <string name="repeat_password">repeat password</string>
+    <string name="weapon">weapon</string>
+    <string name="dexter">dexter</string>
 </resources>

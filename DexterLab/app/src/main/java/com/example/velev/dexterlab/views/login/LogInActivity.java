@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.velev.dexterlab.R;
 import com.example.velev.dexterlab.data.LocalData;
 import com.example.velev.dexterlab.data.models.User;
+import com.example.velev.dexterlab.views.lab.LabActivity;
 import com.example.velev.dexterlab.views.signUp.SignUpActivity;
 
 import java.util.List;
@@ -46,7 +47,6 @@ public class LogInActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void onLogIn() {
-
         Button btnLogin = (Button) findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +72,8 @@ public class LogInActivity extends AppCompatActivity implements LoginContract.Vi
 
                 if (isFound) {
                     Toast.makeText(LogInActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LogInActivity.this, LabActivity.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(LogInActivity.this, "username or password does not match", Toast.LENGTH_SHORT).show();
                     showError(etUsername);
@@ -81,6 +83,11 @@ public class LogInActivity extends AppCompatActivity implements LoginContract.Vi
             }
         });
 
+    }
+
+    @Override
+    public void openLabActivity(){
+        
     }
 
     private void showError(EditText editText) {
