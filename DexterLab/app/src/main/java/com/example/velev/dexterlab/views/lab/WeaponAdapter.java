@@ -1,5 +1,6 @@
 package com.example.velev.dexterlab.views.lab;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.velev.dexterlab.R;
 import com.example.velev.dexterlab.data.models.Weapon;
+import com.example.velev.dexterlab.views.weaponDetails.WeaponDetailsActivity;
 
 import java.util.List;
 
@@ -33,10 +35,18 @@ public class WeaponAdapter extends RecyclerView.Adapter<WeaponAdapter.WeaponHold
     }
 
     @Override
-    public void onBindViewHolder(WeaponAdapter.WeaponHolder holder, int position) {
+    public void onBindViewHolder(final WeaponAdapter.WeaponHolder holder, int position) {
         Weapon weapon = weapons.get(position);
         holder.imgWeapon.setImageResource(weapon.getImg());
         holder.tvName.setText(weapon.getName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.itemView.getContext(), WeaponDetailsActivity.class);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
