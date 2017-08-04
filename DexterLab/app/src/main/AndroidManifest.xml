@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.signUp.SignUpActivity" />
-        <activity android:name=".views.lab.LabActivity"></activity>
+        <activity android:name=".views.lab.LabActivity" />
+        <activity android:name=".views.weaponDetails.WeaponDetailsActivity"></activity>
     </application>
 
 </manifest>
