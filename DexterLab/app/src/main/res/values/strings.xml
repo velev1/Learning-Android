@@ -8,4 +8,7 @@
     <string name="repeat_password">repeat password</string>
     <string name="weapon">weapon</string>
     <string name="dexter">dexter</string>
+    <string name="usage">Usage:</string>
+    <string name="technical_specifications_and_schema">Technical specifications and schema:</string>
+    <string name="effective_versus">Effective versus:</string>
 </resources>

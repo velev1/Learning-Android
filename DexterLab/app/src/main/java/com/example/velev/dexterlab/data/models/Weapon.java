@@ -1,10 +1,12 @@
 package com.example.velev.dexterlab.data.models;
 
+import java.io.Serializable;
+
 /**
  * Created by velev on 3.8.2017 г..
  */
 
-public class Weapon {
+public class Weapon implements Serializable{
     private int img;
     private String name;
     private String usage;

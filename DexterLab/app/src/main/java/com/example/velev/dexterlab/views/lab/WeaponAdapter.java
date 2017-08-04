@@ -1,6 +1,10 @@
 package com.example.velev.dexterlab.views.lab;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +24,8 @@ import java.util.List;
 
 public class WeaponAdapter extends RecyclerView.Adapter<WeaponAdapter.WeaponHolder> {
 
+    private static final String WEAPON_OBJECT = "WEAPON_OBJECT";
+
     private List<Weapon> weapons;
 
     public WeaponAdapter(List<Weapon> weapons) {
@@ -36,7 +42,7 @@ public class WeaponAdapter extends RecyclerView.Adapter<WeaponAdapter.WeaponHold
 
     @Override
     public void onBindViewHolder(final WeaponAdapter.WeaponHolder holder, int position) {
-        Weapon weapon = weapons.get(position);
+        final Weapon weapon = weapons.get(position);
         holder.imgWeapon.setImageResource(weapon.getImg());
         holder.tvName.setText(weapon.getName());
 
@@ -44,7 +50,25 @@ public class WeaponAdapter extends RecyclerView.Adapter<WeaponAdapter.WeaponHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), WeaponDetailsActivity.class);
-                holder.itemView.getContext().startActivity(intent);
+                intent.putExtra(WEAPON_OBJECT, weapon);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+
+                    ImageView img = (ImageView) holder.itemView.findViewById(R.id.img_weapon);
+                    TextView tvName = (TextView) holder.itemView.findViewById(R.id.tv_weapon_name);
+
+                    Activity activity = (Activity) holder.itemView.getContext();
+
+                    Pair<View, String> pairFirst = Pair.create((View)img, "weaponImg");
+                    Pair<View, String> pairSecond = Pair.create((View)tvName, "weaponName");
+                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                            makeSceneTransitionAnimation(activity, pairFirst, pairSecond);
+
+                    activity.startActivity(intent, options.toBundle());
+
+                } else {
+                    holder.itemView.getContext().startActivity(intent);
+                }
             }
         });
     }
