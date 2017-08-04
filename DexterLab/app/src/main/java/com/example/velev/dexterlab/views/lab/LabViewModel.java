@@ -13,7 +13,7 @@ import java.util.List;
  * Created by velev on 3.8.2017 г..
  */
 
-public class LabViewModel {
+public class LabViewModel implements LabContract.ViewModel{
 
     private List<Weapon> weapons;
     private View view;
@@ -25,6 +25,7 @@ public class LabViewModel {
         this.view = new View(context);
     }
 
+    @Override
     public List<Weapon> getAllWeapons() {
         return this.weapons;
     }
