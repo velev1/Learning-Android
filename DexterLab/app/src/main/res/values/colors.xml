@@ -2,10 +2,14 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!--<color name="colorAccent">#FF4081</color>-->
+    <color name="colorAccent">#5cb85c</color>
+
+    <color name="background">#c1d9ff</color>
 
     <color name="white">#fff</color>
     <color name="gray">#ccc</color>
+    <color name="black">#000</color>
 
     <color name="success">#5cb85c</color>
     <color name="successDark">#3d773d</color>

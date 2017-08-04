@@ -3,34 +3,41 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
     <TextView
+        style="@style/text_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/usage"/>
 
     <TextView
+        style="@style/text_paragraph"
         android:id="@+id/tv_usage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
+        style="@style/text_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/technical_specifications_and_schema"/>
 
     <TextView
+        style="@style/text_paragraph"
         android:id="@+id/tv_schema"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
+        style="@style/text_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/effective_versus"/>
 
     <TextView
+        style="@style/text_paragraph"
         android:id="@+id/tv_effective_vs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
