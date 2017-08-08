@@ -1,7 +1,5 @@
 package com.example.velev.fragmentsresponsiveui.views.items;
 
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +22,6 @@ import java.util.List;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>{
     private static final String ITEM_KEY = "ITEM_KEY";
-    private static final int SCREEN_WIDTH = 600;
 
     private List<Item> items;
 
@@ -64,15 +61,16 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
                 ItemDetailsFragment itemDetailsFragment = new ItemDetailsFragment();
                 itemDetailsFragment.setArguments(args);
 
-                Configuration config = activity.getResources().getConfiguration();
-
-                if(config.smallestScreenWidthDp >= SCREEN_WIDTH) {
-                    transaction.replace(R.id.details_container, itemDetailsFragment);
+                // if phone
+                View container = (View) ((AppCompatActivity) holder.itemView.getContext()).findViewById(R.id.details_container);
+                if(container == null) {
+                    transaction.replace(R.id.items_container, itemDetailsFragment);
                     transaction.addToBackStack(null);
 
                     transaction.commit();
                 } else {
-                    transaction.replace(R.id.container, itemDetailsFragment);
+                    // is tablet
+                    transaction.replace(R.id.details_container, itemDetailsFragment);
                     transaction.addToBackStack(null);
 
                     transaction.commit();
