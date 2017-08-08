@@ -2,6 +2,7 @@ package com.example.velev.fragmentsresponsiveui.views.items;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,12 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.velev.fragmentsresponsiveui.R;
+import com.example.velev.fragmentsresponsiveui.data.models.Item;
+import com.example.velev.fragmentsresponsiveui.startup.enums.DeviceType;
+import com.example.velev.fragmentsresponsiveui.startup.models.Device;
 
 /**
  * Created by velev on 7.8.2017 г..
  */
 
-public class ItemsFragment extends Fragment {
+public class ItemsFragment extends Fragment implements ItemsContract.View{
 
     private RecyclerView rvItems;
     private ItemsAdapter adapter;
@@ -40,5 +44,13 @@ public class ItemsFragment extends Fragment {
         rvItems.setItemAnimator(new DefaultItemAnimator());
 
         return view;
+    }
+
+    @Override
+    public void updateUI(String itemKey, Item item, AppCompatActivity activity) {
+        Device mDevice = Device.getInstance(null);
+//        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        DeviceType deviceType = mDevice.getDeviceType();
+        deviceType.updateUI(itemKey, item, activity);
     }
 }

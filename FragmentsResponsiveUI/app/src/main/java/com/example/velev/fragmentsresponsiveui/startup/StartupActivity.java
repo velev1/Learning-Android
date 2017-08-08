@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.velev.fragmentsresponsiveui.R;
+import com.example.velev.fragmentsresponsiveui.startup.enums.DeviceType;
+import com.example.velev.fragmentsresponsiveui.startup.models.Device;
 import com.example.velev.fragmentsresponsiveui.views.itemDetails.ItemDetailsFragment;
 import com.example.velev.fragmentsresponsiveui.views.items.ItemsFragment;
 
 public class StartupActivity extends AppCompatActivity {
+
+    private Device mDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,11 @@ public class StartupActivity extends AppCompatActivity {
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.details_container, itemDetailsFragment).commit();
+
+            this.mDevice = Device.getInstance(DeviceType.TABLET);
         }
+
+        // if phone
+        this.mDevice = Device.getInstance(DeviceType.PHONE);
     }
 }

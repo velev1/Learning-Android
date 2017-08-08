@@ -1,7 +1,5 @@
 package com.example.velev.fragmentsresponsiveui.views.items;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.velev.fragmentsresponsiveui.R;
 import com.example.velev.fragmentsresponsiveui.data.models.Item;
-import com.example.velev.fragmentsresponsiveui.views.itemDetails.ItemDetailsFragment;
+import com.example.velev.fragmentsresponsiveui.startup.models.Device;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +22,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
     private static final String ITEM_KEY = "ITEM_KEY";
 
     private List<Item> items;
+    private Device mDevice;
 
     public ItemsAdapter(List<Item> items) {
 
@@ -52,29 +51,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                ItemsFragment itemsFragment = new ItemsFragment();
                 AppCompatActivity activity = (AppCompatActivity) holder.itemView.getContext();
-                FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-
-                Bundle args = new Bundle();
-                args.putSerializable(ITEM_KEY, item);
-
-                ItemDetailsFragment itemDetailsFragment = new ItemDetailsFragment();
-                itemDetailsFragment.setArguments(args);
-
-                // if phone
-                View container = (View) ((AppCompatActivity) holder.itemView.getContext()).findViewById(R.id.details_container);
-                if(container == null) {
-                    transaction.replace(R.id.items_container, itemDetailsFragment);
-                    transaction.addToBackStack(null);
-
-                    transaction.commit();
-                } else {
-                    // is tablet
-                    transaction.replace(R.id.details_container, itemDetailsFragment);
-                    transaction.addToBackStack(null);
-
-                    transaction.commit();
-                }
+                itemsFragment.updateUI(ITEM_KEY, item, activity);
             }
         });
     }
