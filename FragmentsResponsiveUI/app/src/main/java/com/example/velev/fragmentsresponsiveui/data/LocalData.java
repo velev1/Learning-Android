@@ -24,7 +24,7 @@ public class LocalData {
     }
 
     private void fillFakeData() {
-        for (int i = 0; i < 26; i++) {
+        for (int i = 0; i < 46; i++) {
             Item item = new Item("Item " + (i + 1), DETAILS);
              this.items.add(item);
         }

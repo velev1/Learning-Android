@@ -48,7 +48,7 @@ public class ItemsFragment extends Fragment implements ItemsContract.View{
 
     @Override
     public void updateUI(String itemKey, Item item, AppCompatActivity activity) {
-        Device mDevice = Device.getInstance(null);
+        Device mDevice = Device.getInstance();
 //        AppCompatActivity activity = (AppCompatActivity) getActivity();
         DeviceType deviceType = mDevice.getDeviceType();
         deviceType.updateUI(itemKey, item, activity);

@@ -11,13 +11,13 @@ public class Device {
 
     private DeviceType deviceType;
 
-    private Device(DeviceType deviceType) {
-        this.deviceType = deviceType;
+    private Device() {
+
     }
 
-    public static Device getInstance(DeviceType deviceType){
+    public static Device getInstance(){
         if(instance == null) {
-            instance = new Device(deviceType);
+            instance = new Device();
         }
 
         return instance;
@@ -25,5 +25,9 @@ public class Device {
 
     public DeviceType getDeviceType() {
         return deviceType;
+    }
+
+    public void setDeviceType(DeviceType deviceType) {
+        this.deviceType = deviceType;
     }
 }
