@@ -33,7 +33,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
 
     // define interface listener
     interface ItemClickListener {
-        void onItemClicked(int positionClicked);
+        void onItemClicked(int positionClicked, String itemName);
     }
 
     @Override
@@ -70,7 +70,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>
         @Override
         public void onClick(View v) {
             int clickedPosition = getAdapterPosition();
-            listener.onItemClicked(clickedPosition);
+            String itemName = items.get(clickedPosition);
+
+            listener.onItemClicked(clickedPosition, itemName);
         }
     }
 }

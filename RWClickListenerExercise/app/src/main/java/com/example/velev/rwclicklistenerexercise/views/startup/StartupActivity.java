@@ -1,5 +1,6 @@
 package com.example.velev.rwclicklistenerexercise.views.startup;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,9 +10,13 @@ import android.widget.Toast;
 
 import com.example.velev.rwclicklistenerexercise.R;
 import com.example.velev.rwclicklistenerexercise.data.FakeData;
+import com.example.velev.rwclicklistenerexercise.views.rippledemo.RippleAvtivity;
 
 public class StartupActivity extends AppCompatActivity
         implements ItemsAdapter.ItemClickListener{
+
+    private static final String EXTRA_KEY = "EXTRA_KEY";
+
     private RecyclerView rvItems;
 
     @Override
@@ -32,7 +37,11 @@ public class StartupActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemClicked(int positionClicked) {
+    public void onItemClicked(int positionClicked, String itemName) {
         Toast.makeText(this, "position: " + positionClicked + " clocked", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(StartupActivity.this, RippleAvtivity.class);
+        intent.putExtra(EXTRA_KEY, itemName);
+        startActivity(intent);
     }
 }
