@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.velev.sheredpreferencesdemo.StartupActivity">
+
+    <LinearLayout
+        android:id="@+id/container_img_dexter"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:paddingTop="16dp"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_dexter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/dexter" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_img_deedee"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:paddingTop="16dp"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_deedee"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/deedee" />
+    </LinearLayout>
+
+</LinearLayout>
