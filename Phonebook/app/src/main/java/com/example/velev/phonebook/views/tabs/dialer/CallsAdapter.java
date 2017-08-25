@@ -17,13 +17,16 @@ import java.util.List;
 public class CallsAdapter extends RecyclerView.Adapter<CallsAdapter.CallsHolder> {
 
     private List<CallModel> calls;
+    private ItemClickListener listener;
 
-    public CallsAdapter(List<CallModel> calls) {
+    public CallsAdapter(List<CallModel> calls, ItemClickListener listener) {
         if (calls == null) {
             this.calls = new ArrayList<>();
         } else {
             this.calls = calls;
         }
+
+        this.listener = listener;
     }
 
     @Override
@@ -59,7 +62,12 @@ public class CallsAdapter extends RecyclerView.Adapter<CallsAdapter.CallsHolder>
         notifyDataSetChanged();
     }
 
-    public class CallsHolder extends RecyclerView.ViewHolder{
+    interface ItemClickListener {
+        void onItemClick(CallModel call);
+    }
+
+
+    public class CallsHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView tvName;
         private TextView tvDate;
 
@@ -68,6 +76,16 @@ public class CallsAdapter extends RecyclerView.Adapter<CallsAdapter.CallsHolder>
 
             tvName = (TextView) view.findViewById(R.id.tv_name);
             tvDate = (TextView) view.findViewById(R.id.tv_date);
+
+            // attach the listener
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int positionClicked = getAdapterPosition();
+
+            listener.onItemClick(calls.get(positionClicked));
         }
     }
 }

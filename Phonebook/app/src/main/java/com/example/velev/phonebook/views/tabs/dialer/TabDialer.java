@@ -29,7 +29,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class TabDialer extends Fragment implements DialerContract.View {
+public class TabDialer extends Fragment implements DialerContract.View, CallsAdapter.ItemClickListener {
 
     @Inject
     public DialerContract.Presenter presenter;
@@ -63,13 +63,12 @@ public class TabDialer extends Fragment implements DialerContract.View {
         this.spinner = (ProgressBar) this.view.findViewById(R.id.spinner);
         spinner.setVisibility(View.VISIBLE);
 
-        this.adapter = new CallsAdapter(this.calls);
+        this.adapter = new CallsAdapter(this.calls, this);
         this.rvCallLog = (RecyclerView) view.findViewById(R.id.rv_call_log);
         rvCallLog.setAdapter(this.adapter);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         rvCallLog.setLayoutManager(layoutManager);
-
 
 
         this.presenter.getCallLog(context)
@@ -84,21 +83,14 @@ public class TabDialer extends Fragment implements DialerContract.View {
                     }
                 });
 
-        openCallLogDetails();
-
         return this.view;
     }
 
     @Override
-    public void openCallLogDetails(){
-//        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(getActivity(), CallLogDetails.class);
-//                intent.putExtra(CONTACT_KEY, (CallModel)list_view.getAdapter().getItem(position));
-//                startActivity(intent);
-//            }
-//        });
+    public void openCallLogDetails(CallModel call) {
+        Intent intent = new Intent(getActivity(), CallLogDetails.class);
+        intent.putExtra(CONTACT_KEY, call);
+        startActivity(intent);
     }
 
     @Override
@@ -106,8 +98,13 @@ public class TabDialer extends Fragment implements DialerContract.View {
         this.presenter = presenter;
     }
 
+    @Override
+    public void onItemClick(CallModel call) {
+        openCallLogDetails(call);
+    }
+
     private void inject() {
-        ((PhoneBookApplication)(getActivity().getApplication()))
+        ((PhoneBookApplication) (getActivity().getApplication()))
                 .getComponent()
                 .inject(this);
     }

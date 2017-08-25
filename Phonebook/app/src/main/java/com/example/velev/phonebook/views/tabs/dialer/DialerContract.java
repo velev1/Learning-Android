@@ -14,7 +14,7 @@ public interface DialerContract {
 
     interface View extends BaseView<DialerContract.Presenter> {
 
-        void openCallLogDetails();
+        void openCallLogDetails(CallModel call);
     }
 
     interface Presenter extends BasePresenter<DialerContract.View>{
