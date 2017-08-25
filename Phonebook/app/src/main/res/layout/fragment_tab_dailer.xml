@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context=".views.tabs.dialer.TabDialer">
 
-
     <ProgressBar
         android:id="@+id/spinner"
         style="?android:attr/progressBarStyleLarge"
@@ -14,14 +13,9 @@
         android:layout_centerVertical="true"
         android:indeterminate="false" />
 
-    <ListView
-        android:id="@+id/dialer_list"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_call_log"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="40dp">
-    </ListView>
-
+        android:layout_height="match_parent"/>
+    
 </RelativeLayout >

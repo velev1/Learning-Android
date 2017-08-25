@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +37,7 @@ public class TabDialer extends Fragment implements DialerContract.View {
     private final static String CONTACT_KEY = "contact_key";
 
     private View view;
-    private ListView list_view;
+    private RecyclerView rvCallLog;
     private List<CallModel> calls;
     private CallsAdapter adapter;
     private Context context;
@@ -61,7 +63,14 @@ public class TabDialer extends Fragment implements DialerContract.View {
         this.spinner = (ProgressBar) this.view.findViewById(R.id.spinner);
         spinner.setVisibility(View.VISIBLE);
 
-        this.adapter = new CallsAdapter(getActivity(), R.layout.fragment_call__log, this.calls);
+        this.adapter = new CallsAdapter(this.calls);
+        this.rvCallLog = (RecyclerView) view.findViewById(R.id.rv_call_log);
+        rvCallLog.setAdapter(this.adapter);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        rvCallLog.setLayoutManager(layoutManager);
+
+
 
         this.presenter.getCallLog(context)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -69,15 +78,11 @@ public class TabDialer extends Fragment implements DialerContract.View {
                 .subscribe(new Consumer<List<CallModel>>() {
                     @Override
                     public void accept(@NonNull List<CallModel> callModels) throws Exception {
-                        TabDialer.this.adapter.clear();
+
+                        TabDialer.this.adapter.swapData(callModels);
                         spinner.setVisibility(View.GONE);
-                        TabDialer.this.adapter.addAll(callModels);
-                        TabDialer.this.adapter.notifyDataSetChanged();
                     }
                 });
-
-        list_view = (ListView) this.view.findViewById(R.id.dialer_list);
-        list_view.setAdapter(this.adapter);
 
         openCallLogDetails();
 
@@ -86,14 +91,14 @@ public class TabDialer extends Fragment implements DialerContract.View {
 
     @Override
     public void openCallLogDetails(){
-        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), CallLogDetails.class);
-                intent.putExtra(CONTACT_KEY, (CallModel)list_view.getAdapter().getItem(position));
-                startActivity(intent);
-            }
-        });
+//        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent = new Intent(getActivity(), CallLogDetails.class);
+//                intent.putExtra(CONTACT_KEY, (CallModel)list_view.getAdapter().getItem(position));
+//                startActivity(intent);
+//            }
+//        });
     }
 
     @Override
