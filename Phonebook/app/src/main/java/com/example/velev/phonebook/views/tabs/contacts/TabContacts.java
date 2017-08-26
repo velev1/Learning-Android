@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -31,7 +33,7 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.annotations.NonNull;
 
 
-public class TabContacts extends Fragment implements ContactsContract.View{
+public class TabContacts extends Fragment implements ContactsContract.View, ContactAdapter.ItemClickListener {
 
     @Inject
     public ContactsContract.Presenter presenter;
@@ -39,10 +41,10 @@ public class TabContacts extends Fragment implements ContactsContract.View{
     private static final String CONTACT_KEY = "contact_key";
 
     private View view;
-    private ListView list_view;
+    private RecyclerView rvContacts;
     private EditText etSearch;
     private ImageButton btnOpenAddContactActivity;
-    private ContactsAdapter adapter;
+    private ContactAdapter adapter;
     private Context context;
     private List<PhoneContact> contacts;
 
@@ -59,19 +61,17 @@ public class TabContacts extends Fragment implements ContactsContract.View{
             parent.removeView(this.view);
         }
         this.inject();
-        //this.presenter = new ContactsPresenter();
+
         this.context = this.view.getContext();
 
+        this.adapter = new ContactAdapter(this.contacts, this);
+        rvContacts = (RecyclerView) view.findViewById(R.id.rv_contacts);
+        rvContacts.setAdapter(this.adapter);
 
-        this.contacts = new ArrayList<>();
-        this.adapter = new ContactsAdapter(getActivity(), R.layout.fragment_list_view_item, this.contacts);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        rvContacts.setLayoutManager(layoutManager);
 
         updateAdapter();
-
-        list_view = (ListView) this.view.findViewById(R.id.contacts_list);
-        list_view.setAdapter(this.adapter);
-
-        openDetailsActivity();
 
         btnOpenAddContactActivity = (ImageButton) this.view.findViewById(R.id.btn_open_add_contact_activity);
 
@@ -120,15 +120,15 @@ public class TabContacts extends Fragment implements ContactsContract.View{
     }
 
     @Override
-    public void openDetailsActivity() {
-        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), DetailsContact.class);
-                intent.putExtra(CONTACT_KEY, (PhoneContact) list_view.getAdapter().getItem(position));
-                startActivity(intent);
-            }
-        });
+    public void openDetailsActivity(PhoneContact contact) {
+        Intent intent = new Intent(getActivity(), DetailsContact.class);
+        intent.putExtra(CONTACT_KEY, contact);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(PhoneContact contact) {
+        openDetailsActivity(contact);
     }
 
     private void getFilteredAdapter(String textToFind) {
@@ -138,9 +138,7 @@ public class TabContacts extends Fragment implements ContactsContract.View{
                 .subscribe(new Consumer<List<PhoneContact>>() {
                     @Override
                     public void accept(@NonNull List<PhoneContact> callModels) throws Exception {
-                        TabContacts.this.adapter.clear();
-                        TabContacts.this.adapter.addAll(callModels);
-                        TabContacts.this.adapter.notifyDataSetChanged();
+                        TabContacts.this.adapter.swapData(callModels);
                     }
                 });
     }
@@ -152,15 +150,13 @@ public class TabContacts extends Fragment implements ContactsContract.View{
                 .subscribe(new Consumer<List<PhoneContact>>() {
                     @Override
                     public void accept(@NonNull List<PhoneContact> callModels) throws Exception {
-                        TabContacts.this.adapter.clear();
-                        TabContacts.this.adapter.addAll(callModels);
-                        TabContacts.this.adapter.notifyDataSetChanged();
+                        TabContacts.this.adapter.swapData(callModels);
                     }
                 });
     }
 
     private void inject() {
-        ((PhoneBookApplication)(getActivity().getApplication()))
+        ((PhoneBookApplication) (getActivity().getApplication()))
                 .getComponent()
                 .inject(this);
     }

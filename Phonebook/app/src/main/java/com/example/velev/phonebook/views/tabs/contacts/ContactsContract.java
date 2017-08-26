@@ -16,7 +16,7 @@ public interface ContactsContract {
 
         void openAddContactActivity();
 
-        void openDetailsActivity();
+        void openDetailsActivity(PhoneContact contact);
     }
 
     interface Presenter extends BasePresenter<ContactsContract.View>{
