@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -27,17 +28,17 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class TabGroups extends Fragment implements GroupsContract.View{
+public class TabGroups extends Fragment implements GroupsContract.View, GroupAdapter.ItemClickListener{
 
     @Inject
     public GroupsContract.Presenter presenter;
 
     private View view;
     //private GroupsPresenter presenter;
-    private GroupsAdapter adapter;
+    private GroupAdapter adapter;
     private Context context;
     private List<GroupModel> groups;
-    private ListView list_view;
+    private RecyclerView rvGroups;
     private ImageButton btnOpenCreateGroupActivity;
 
     public TabGroups() {
@@ -57,8 +58,13 @@ public class TabGroups extends Fragment implements GroupsContract.View{
         this.inject();
         //this.presenter = new GroupsPresenter();
         this.context = getActivity();
-        this.groups = new ArrayList<>();
-        this.adapter = new GroupsAdapter(this.context, R.layout.fragment_group_list, this.groups);
+
+        this.adapter = new GroupAdapter(this.groups, this);
+        rvGroups = (RecyclerView) view.findViewById(R.id.rv_groups);
+        rvGroups.setAdapter(this.adapter);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        rvGroups.setLayoutManager(layoutManager);
 
         this.btnOpenCreateGroupActivity = (ImageButton) view.findViewById(R.id.btn_open_create_group_activity);
 
@@ -66,10 +72,6 @@ public class TabGroups extends Fragment implements GroupsContract.View{
         updateAdapter();
 
         openCreateGroupActivity();
-
-        // set adapter
-        list_view = (ListView) this.view.findViewById(R.id.lv_groups);
-        list_view.setAdapter(this.adapter);
 
         return this.view;
     }
@@ -90,6 +92,11 @@ public class TabGroups extends Fragment implements GroupsContract.View{
         this.presenter = presenter;
     }
 
+    @Override
+    public void onItemClick() {
+        // TODO do stuff
+    }
+
     private void updateAdapter() {
         this.presenter.getAllGroups(this.context)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -97,9 +104,7 @@ public class TabGroups extends Fragment implements GroupsContract.View{
                 .subscribe(new Consumer<List<GroupModel>>() {
                     @Override
                     public void accept(@NonNull List<GroupModel> groupModels) throws Exception {
-                        TabGroups.this.adapter.clear();
-                        TabGroups.this.adapter.addAll(groupModels);
-                        TabGroups.this.adapter.notifyDataSetChanged();
+                        TabGroups.this.adapter.swapData(groupModels);
                     }
                 });
     }
