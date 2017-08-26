@@ -4,13 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 
-import com.example.velev.phonebook.PhoneBookApplication;
 import com.example.velev.phonebook.R;
-import com.example.velev.phonebook.views.tabs.contacts.ContactsContract;
 
-import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
     private static final String DIALER = "Dialer";
@@ -21,9 +17,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(DIALER));
