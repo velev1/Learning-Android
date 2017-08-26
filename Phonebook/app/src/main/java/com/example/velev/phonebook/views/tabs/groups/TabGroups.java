@@ -3,21 +3,19 @@ package com.example.velev.phonebook.views.tabs.groups;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ListView;
 
 import com.example.velev.phonebook.PhoneBookApplication;
 import com.example.velev.phonebook.R;
 import com.example.velev.phonebook.data.models.GroupModel;
 import com.example.velev.phonebook.views.createGroup.CreateGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,7 +37,7 @@ public class TabGroups extends Fragment implements GroupsContract.View, GroupAda
     private Context context;
     private List<GroupModel> groups;
     private RecyclerView rvGroups;
-    private ImageButton btnOpenCreateGroupActivity;
+    private FloatingActionButton fabAddGroup;
 
     public TabGroups() {
         // Required empty public constructor
@@ -66,7 +64,7 @@ public class TabGroups extends Fragment implements GroupsContract.View, GroupAda
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         rvGroups.setLayoutManager(layoutManager);
 
-        this.btnOpenCreateGroupActivity = (ImageButton) view.findViewById(R.id.btn_open_create_group_activity);
+        fabAddGroup = (FloatingActionButton) view.findViewById(R.id.fab_add_group);
 
         // get the groups
         updateAdapter();
@@ -78,7 +76,7 @@ public class TabGroups extends Fragment implements GroupsContract.View, GroupAda
 
     @Override
     public void openCreateGroupActivity() {
-        this.btnOpenCreateGroupActivity.setOnClickListener(new View.OnClickListener() {
+        this.fabAddGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateGroup.class);

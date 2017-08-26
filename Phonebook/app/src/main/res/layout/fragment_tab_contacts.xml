@@ -17,14 +17,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_search"/>
 
-    <ImageButton
-        android:id="@+id/btn_open_add_contact_activity"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_contact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_create_contact"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:background="@drawable/rounded_button"
-        android:padding="8dp"
-        android:src="@drawable/ic_btn_open_details" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

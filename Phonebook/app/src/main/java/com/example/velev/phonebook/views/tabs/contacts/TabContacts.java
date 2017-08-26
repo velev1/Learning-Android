@@ -3,6 +3,7 @@ package com.example.velev.phonebook.views.tabs.contacts;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +12,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import com.example.velev.phonebook.PhoneBookApplication;
 import com.example.velev.phonebook.R;
@@ -22,7 +21,6 @@ import com.example.velev.phonebook.data.models.PhoneContact;
 import com.example.velev.phonebook.views.addContact.AddContact;
 import com.example.velev.phonebook.views.details.DetailsContact;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -43,7 +41,7 @@ public class TabContacts extends Fragment implements ContactsContract.View, Cont
     private View view;
     private RecyclerView rvContacts;
     private EditText etSearch;
-    private ImageButton btnOpenAddContactActivity;
+    private FloatingActionButton fabCreateContact;
     private ContactAdapter adapter;
     private Context context;
     private List<PhoneContact> contacts;
@@ -73,7 +71,7 @@ public class TabContacts extends Fragment implements ContactsContract.View, Cont
 
         updateAdapter();
 
-        btnOpenAddContactActivity = (ImageButton) this.view.findViewById(R.id.btn_open_add_contact_activity);
+        fabCreateContact = (FloatingActionButton) view.findViewById(R.id.fab_add_contact);
 
         openAddContactActivity();
 
@@ -110,7 +108,7 @@ public class TabContacts extends Fragment implements ContactsContract.View, Cont
 
     @Override
     public void openAddContactActivity() {
-        btnOpenAddContactActivity.setOnClickListener(new View.OnClickListener() {
+        fabCreateContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddContact.class);
