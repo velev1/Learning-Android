@@ -1,6 +1,7 @@
 package com.example.velev.dragselection.gridview;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.velev.dragselection.R;
@@ -26,12 +29,24 @@ public class GridFragment extends Fragment
 
     private RecyclerView rvHours;
     private CustomScrollView scrollView;
+    private Switch mSwitch;
+    private FloatingActionButton mFab;
     private GridAdapter adapter;
     private int currentPosition;
 
     private float mX;
     private float mY;
     private Direction mDirection;
+    private boolean mInitialVisibilityStateFAB = true;
+
+//    private boolean isChecked = false;
+//    private Switch mToggle;
+
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setHasOptionsMenu(true);
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,13 +56,30 @@ public class GridFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_grid, container, false);
 
 
+
+        mSwitch = (Switch) view.findViewById(R.id.sw_select_mode);
+        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Toast.makeText(getContext(), "ON", Toast.LENGTH_SHORT).show();
+                    onSelectModeOn();
+                } else {
+                    // The toggle is disabled
+                    Toast.makeText(getContext(), "OFF", Toast.LENGTH_SHORT).show();
+                    rvHours.setOnTouchListener(null);
+                    scrollView.setEnableScrolling(true);
+                }
+            }
+        });
+
+
         List<String> data = new ArrayList<>();
         int length = 7 * 24;
         int counter = 0;
         for (int i = 0; i < length; i++) {
 
             String day = getDayOfWeekByIndex(i % 7);
-            data.add(day + " " + String.valueOf(counter));
+            data.add(day + " " + createStringHour(counter));
             if ((i + 1) % 7 == 0) {
                 counter++;
             }
@@ -58,18 +90,21 @@ public class GridFragment extends Fragment
         rvHours = (RecyclerView) view.findViewById(R.id.rv_grid);
         int numberOfColumns = 7;
         rvHours.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));
-        adapter = new GridAdapter(data, this);
+        adapter = new GridAdapter(data, this, getContext());
         rvHours.setAdapter(adapter);
 
+        mFab =(FloatingActionButton) view.findViewById(R.id.fab_save);
+        onScroll();
 
         return view;
     }
 
     @Override
     public void onLongPressed() {
-        // reset the coordinates and direction
-        mX = -1;
-        mY = -1;
+
+    }
+
+    private void onSelectModeOn() {
         mDirection = Direction.NONE;
 
         scrollView.setEnableScrolling(false);
@@ -81,17 +116,8 @@ public class GridFragment extends Fragment
                 int action = MotionEventCompat.getActionMasked(event);
 
                 switch (action) {
-                    case (MotionEvent.ACTION_DOWN):
-                        // TODO think about initialise mX and mY here...
-                        return true;
+
                     case (MotionEvent.ACTION_MOVE):
-
-                        // if first time after longPress
-                        if (mX == -1 && mY == -1) {
-                            mX = event.getX();
-                            mY = event.getY();
-                        }
-
                         View view = rvHours.findChildViewUnder(event.getX(), event.getY());
 
                         if (view != null) {
@@ -100,18 +126,18 @@ public class GridFragment extends Fragment
                             boolean isToggleSelectionON = detectDirection(event.getX(), event.getY());
 
                             if (isToggleSelectionON) {
-                                adapter.unSelect(position);
+                                adapter.unSelect(position, view);
                                 view.setBackgroundResource(R.drawable.cell_background);
                             }
-                            Toast.makeText(getContext(), String.valueOf(mDirection), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getContext(), String.valueOf(mDirection), Toast.LENGTH_SHORT).show();
                             if (position != currentPosition) {
                                 currentPosition = position;
 
                                 if (adapter.checkIfSelected(position)) {
-                                    adapter.unSelect(position);
+                                    adapter.unSelect(position, view);
                                     view.setBackgroundResource(R.drawable.cell_background);
                                 } else {
-                                    adapter.select(position);
+                                    adapter.select(position, view);
                                     view.setBackgroundResource(R.drawable.cell_background_selected);
                                 }
                             }
@@ -121,12 +147,6 @@ public class GridFragment extends Fragment
                         mY = event.getY();
 
                         return true;
-
-                    case (MotionEvent.ACTION_UP):
-                        rvHours.setOnTouchListener(null);
-                        scrollView.setEnableScrolling(true);
-
-                        return true;
                 }
 
                 return true;
@@ -134,6 +154,99 @@ public class GridFragment extends Fragment
         });
     }
 
+
+    //    @Override
+//    public void onLongPressed() {
+//        // reset the coordinates and direction
+////        mX = -1;
+////        mY = -1;
+//        mDirection = Direction.NONE;
+//
+//        scrollView.setEnableScrolling(false);
+//
+//        rvHours.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//
+//                int action = MotionEventCompat.getActionMasked(event);
+//
+//                switch (action) {
+////                    case (MotionEvent.ACTION_DOWN):
+////                        // TODO think about initialise mX and mY here...
+////                        mX = event.getX();
+////                        mY = event.getY();
+////                        Toast.makeText(getContext(), "x= " + mX +" y= " + mY, Toast.LENGTH_SHORT).show();
+////                        return true;
+//                    case (MotionEvent.ACTION_MOVE):
+//
+//                        // if first time after longPress
+////                        if (mX == -1 && mY == -1) {
+////                            mX = event.getX();
+////                            mY = event.getY();
+////                        }
+//
+//                        View view = rvHours.findChildViewUnder(event.getX(), event.getY());
+//
+//                        if (view != null) {
+//                            int position = rvHours.getChildAdapterPosition(view);
+//
+//                            boolean isToggleSelectionON = detectDirection(event.getX(), event.getY());
+//
+//                            if (isToggleSelectionON) {
+//                                adapter.unSelect(position);
+//                                view.setBackgroundResource(R.drawable.cell_background);
+//                            }
+////                            Toast.makeText(getContext(), String.valueOf(mDirection), Toast.LENGTH_SHORT).show();
+//                            if (position != currentPosition) {
+//                                currentPosition = position;
+//
+//                                if (adapter.checkIfSelected(position)) {
+//                                    adapter.unSelect(position);
+//                                    view.setBackgroundResource(R.drawable.cell_background);
+//                                } else {
+//                                    adapter.select(position);
+//                                    view.setBackgroundResource(R.drawable.cell_background_selected);
+//                                }
+//                            }
+//                        }
+//                        // update the values
+//                        mX = event.getX();
+//                        mY = event.getY();
+//
+//                        return true;
+//
+//                    case (MotionEvent.ACTION_UP):
+//                        rvHours.setOnTouchListener(null);
+//                        scrollView.setEnableScrolling(true);
+//
+//                        return true;
+//                }
+//
+//                return true;
+//            }
+//        });
+//    }
+
+    private void onScroll(){
+
+        rvHours.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                mFab.show();
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if(!mInitialVisibilityStateFAB) {
+                    mFab.hide();
+                }
+
+                mInitialVisibilityStateFAB = false;
+            }
+        });
+
+    }
 
     private boolean detectDirection(float x, float y) {
         float dX = mX - x;
@@ -177,15 +290,24 @@ public class GridFragment extends Fragment
     private String getDayOfWeekByIndex(int index) {
 
         String[] days = new String[]{
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday"
+                "Sun",
+                "Mon",
+                "Tue",
+                "Wed",
+                "Thu",
+                "Fri",
+                "Sat"
         };
 
         return days[index];
+    }
+
+    private String createStringHour(int hour) {
+
+        if (hour < 10) {
+            return  "0" + hour + ":00";
+        } else {
+            return hour + ":00";
+        }
     }
 }

@@ -2,16 +2,105 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary">
+        <TextView
+            android:id="@+id/lbl_select_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Drag selection mode"
+            android:textColor="#fff"
+            android:layout_marginLeft="16dp"
+            android:layout_centerVertical="true"/>
+        <Switch
+            android:id="@+id/sw_select_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/lbl_select_mode"/>
+    </RelativeLayout>
 
     <com.example.velev.dragselection.gridview.CustomScrollView
         android:id="@+id/sv_horizontal"
+        android:layout_below="@+id/toolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_grid"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/days_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/cell_width"
+                    android:layout_height="@dimen/cell_height"
+                    android:text="Sun"
+                    android:background="@drawable/cell_background"/>
+                <TextView
+                    android:layout_width="@dimen/cell_width"
+                    android:layout_height="@dimen/cell_height"
+                    android:text="Mon"
+                    android:background="@drawable/cell_background"/>
+                <TextView
+                    android:layout_width="@dimen/cell_width"
+                    android:layout_height="@dimen/cell_height"
+                    android:text="Tue"
+                    android:background="@drawable/cell_background"/>
+                <TextView
+                    android:layout_width="@dimen/cell_width"
+                    android:layout_height="@dimen/cell_height"
+                    android:text="Wed"
+                    android:background="@drawable/cell_background"/>
+                <TextView
+                    android:layout_width="@dimen/cell_width"
+                    android:layout_height="@dimen/cell_height"
+                    android:text="Thu"
+                    android:background="@drawable/cell_background"/>
+                <TextView
+                    android:layout_width="@dimen/cell_width"
+                    android:layout_height="@dimen/cell_height"
+                    android:text="Fri"
+                    android:background="@drawable/cell_background"/>
+                <TextView
+                    android:layout_width="@dimen/cell_width"
+                    android:layout_height="@dimen/cell_height"
+                    android:text="Sat"
+                    android:background="@drawable/cell_background"/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_grid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/days_container"/>
+        </RelativeLayout>
+
+
     </com.example.velev.dragselection.gridview.CustomScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_save"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
