@@ -3,13 +3,13 @@ package com.example.velev.dragselection.gridview;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 
 /**
- * Created by velev on 8.9.2017 г..
+ * Created by velev on 11.9.2017 г..
  */
 
-public class CustomScrollView extends HorizontalScrollView {
+public class CustomVerticalScrollView extends ScrollView {
 
 
     private boolean enableScrolling = true;
@@ -22,15 +22,15 @@ public class CustomScrollView extends HorizontalScrollView {
         this.enableScrolling = enableScrolling;
     }
 
-    public CustomScrollView(Context context, AttributeSet attrs, int defStyle) {
+    public CustomVerticalScrollView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public CustomScrollView(Context context, AttributeSet attrs) {
+    public CustomVerticalScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public CustomScrollView(Context context) {
+    public CustomVerticalScrollView(Context context) {
         super(context);
     }
 

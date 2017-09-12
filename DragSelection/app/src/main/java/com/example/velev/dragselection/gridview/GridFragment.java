@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -28,11 +29,13 @@ public class GridFragment extends Fragment
         implements GridAdapter.OnLongPressSelectedItem {
 
     private RecyclerView rvHours;
-    private CustomScrollView scrollView;
+    private CustomHorizontalScrollView scrollView;
+//    private CustomVerticalScrollView mVerticalScrollView;
     private Switch mSwitch;
     private FloatingActionButton mFab;
     private GridAdapter adapter;
     private int currentPosition;
+    private Button mBtnClear;
 
     private float mX;
     private float mY;
@@ -68,6 +71,7 @@ public class GridFragment extends Fragment
                     Toast.makeText(getContext(), "OFF", Toast.LENGTH_SHORT).show();
                     rvHours.setOnTouchListener(null);
                     scrollView.setEnableScrolling(true);
+//                    mVerticalScrollView.setEnableScrolling(true);
                 }
             }
         });
@@ -85,13 +89,17 @@ public class GridFragment extends Fragment
             }
         }
 
-        scrollView = (CustomScrollView) view.findViewById(R.id.sv_horizontal);
+        scrollView = (CustomHorizontalScrollView) view.findViewById(R.id.sv_horizontal);
+//        mVerticalScrollView = (CustomVerticalScrollView) view.findViewById(R.id.scroll_vertical);
 
         rvHours = (RecyclerView) view.findViewById(R.id.rv_grid);
         int numberOfColumns = 7;
         rvHours.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));
         adapter = new GridAdapter(data, this, getContext());
         rvHours.setAdapter(adapter);
+
+        mBtnClear = (Button) view.findViewById(R.id.btn_clear);
+        clearGrid();
 
         mFab =(FloatingActionButton) view.findViewById(R.id.fab_save);
         onScroll();
@@ -108,6 +116,7 @@ public class GridFragment extends Fragment
         mDirection = Direction.NONE;
 
         scrollView.setEnableScrolling(false);
+//        mVerticalScrollView.setEnableScrolling(false);
 
         rvHours.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -309,5 +318,20 @@ public class GridFragment extends Fragment
         } else {
             return hour + ":00";
         }
+    }
+
+    private void clearGrid() {
+
+        mBtnClear.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                boolean[] cellStatus = adapter.getIsSelected();
+                for (int i = 0; i < cellStatus.length; i++) {
+                    if (cellStatus[i]){
+                        adapter.unSelect(i);
+                    }
+                }
+            }
+        });
     }
 }

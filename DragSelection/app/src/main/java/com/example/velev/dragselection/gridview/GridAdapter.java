@@ -50,16 +50,14 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridHolder> {
 
         if (isSelected[position]) {
             holder.itemView.setBackgroundResource(R.drawable.cell_background_selected);
-            holder.tvDay.setTextColor(ContextCompat.getColor(mContext, R.color.white));
             holder.tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.white));
         } else {
             holder.itemView.setBackgroundResource(R.drawable.cell_background);
-            holder.tvDay.setTextColor(ContextCompat.getColor(mContext, R.color.black));
             holder.tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.black));
         }
 
         String[] dayAndHour = data.get(position).split(" ");
-        holder.tvDay.setText(dayAndHour[0]);
+        //  holder.tvDay.setText(dayAndHour[0]);
         holder.tvHour.setText(dayAndHour[1]);
     }
 
@@ -72,28 +70,37 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridHolder> {
         void onLongPressed();
     }
 
+    public boolean[] getIsSelected() {
+        return this.isSelected;
+    }
+
     public void select(int position, View view) {
-        if(position > -1 && position < isSelected.length) {
+        if (position > -1 && position < isSelected.length) {
             isSelected[position] = true;
-            TextView tvDay = (TextView) view.findViewById(R.id.tv_day);
-            tvDay.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+
             TextView tvHour = (TextView) view.findViewById(R.id.tv_hour);
             tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.white));
         }
     }
 
-    public void unSelect(int position, View view) {
-        if (position > -1 && position < isSelected.length){
+    public void unSelect(int position) {
+        if (position > -1 && position < isSelected.length) {
             isSelected[position] = false;
-            TextView tvDay = (TextView) view.findViewById(R.id.tv_day);
-            tvDay.setTextColor(ContextCompat.getColor(mContext, R.color.black));
+            notifyItemChanged(position);
+        }
+    }
+
+    public void unSelect(int position, View view) {
+        if (position > -1 && position < isSelected.length) {
+            isSelected[position] = false;
+
             TextView tvHour = (TextView) view.findViewById(R.id.tv_hour);
             tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.black));
         }
     }
 
     public boolean checkIfSelected(int position) {
-        if (position > -1 && position < isSelected.length){
+        if (position > -1 && position < isSelected.length) {
             if (isSelected[position]) {
                 return true;
             }
@@ -103,15 +110,13 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridHolder> {
     }
 
     public class GridHolder extends RecyclerView.ViewHolder
-        implements View.OnClickListener, View.OnLongClickListener{
+            implements View.OnClickListener, View.OnLongClickListener {
 
-        private TextView tvDay;
         private TextView tvHour;
 
         public GridHolder(View view) {
             super(view);
 
-            this.tvDay = (TextView) view.findViewById(R.id.tv_day);
             this.tvHour = (TextView) view.findViewById(R.id.tv_hour);
 
             // attach the long click
@@ -130,17 +135,14 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridHolder> {
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            if(!isSelected[position]) {
+            if (!isSelected[position]) {
                 isSelected[position] = true;
-
                 v.setBackgroundResource(R.drawable.cell_background_selected);
-                tvDay.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                 tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.white));
 
             } else {
                 isSelected[position] = false;
                 v.setBackgroundResource(R.drawable.cell_background);
-                tvDay.setTextColor(ContextCompat.getColor(mContext, R.color.black));
                 tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.black));
             }
         }
