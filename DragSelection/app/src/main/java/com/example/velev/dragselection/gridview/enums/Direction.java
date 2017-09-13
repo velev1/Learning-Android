@@ -1,4 +1,4 @@
-package com.example.velev.dragselection.enums;
+package com.example.velev.dragselection.gridview.enums;
 
 /**
  * Created by velev on 8.9.2017 г..

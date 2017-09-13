@@ -1,98 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
 
     <RelativeLayout
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorPrimary">
-        <TextView
-            android:id="@+id/lbl_select_mode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Drag selection mode"
-            android:textColor="#fff"
-            android:layout_marginLeft="16dp"
-            android:layout_centerVertical="true"/>
-        <Switch
-            android:id="@+id/sw_select_mode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
-            android:layout_toRightOf="@+id/lbl_select_mode"/>
-
-        <Button
-            android:id="@+id/btn_clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/sw_select_mode"
-            android:layout_marginLeft="8dp"
-            android:layout_centerVertical="true"
-            android:text="Clear"/>
-    </RelativeLayout>
-
-    <com.example.velev.dragselection.gridview.CustomHorizontalScrollView
-        android:id="@+id/sv_horizontal"
-        android:layout_below="@+id/toolbar"
+        android:id="@+id/root"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <!--lbl days-->
-            <LinearLayout
-                android:id="@+id/days_container"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/transparent_black_20">
+
+            <TextView
+                android:id="@+id/lbl_select_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:text="Drag selection mode"
+                android:textColor="#fff" />
 
-                <TextView
-                    android:layout_width="@dimen/cell_width"
-                    android:layout_height="@dimen/cell_height"
-                    android:text="Sun"
-                    android:background="@drawable/cell_background"/>
-                <TextView
-                    android:layout_width="@dimen/cell_width"
-                    android:layout_height="@dimen/cell_height"
-                    android:text="Mon"
-                    android:background="@drawable/cell_background"/>
-                <TextView
-                    android:layout_width="@dimen/cell_width"
-                    android:layout_height="@dimen/cell_height"
-                    android:text="Tue"
-                    android:background="@drawable/cell_background"/>
-                <TextView
-                    android:layout_width="@dimen/cell_width"
-                    android:layout_height="@dimen/cell_height"
-                    android:text="Wed"
-                    android:background="@drawable/cell_background"/>
-                <TextView
-                    android:layout_width="@dimen/cell_width"
-                    android:layout_height="@dimen/cell_height"
-                    android:text="Thu"
-                    android:background="@drawable/cell_background"/>
-                <TextView
-                    android:layout_width="@dimen/cell_width"
-                    android:layout_height="@dimen/cell_height"
-                    android:text="Fri"
-                    android:background="@drawable/cell_background"/>
-                <TextView
-                    android:layout_width="@dimen/cell_width"
-                    android:layout_height="@dimen/cell_height"
-                    android:text="Sat"
-                    android:background="@drawable/cell_background"/>
+            <Switch
+                android:id="@+id/sw_select_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/lbl_select_mode" />
 
-            </LinearLayout>
+            <Button
+                android:id="@+id/btn_clear"
+                style="@style/btn_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:text="Clear" />
+        </RelativeLayout>
 
-            <!--<ScrollView-->
+        <com.example.velev.dragselection.gridview.CustomHorizontalScrollView
+            android:id="@+id/sv_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <!--lbl days-->
+                <LinearLayout
+                    android:id="@+id/days_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/cell_width"
+                        android:layout_height="@dimen/cell_height"
+                        android:background="@drawable/cell_header_background"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:text="Sun" />
+
+                    <TextView
+                        android:layout_width="@dimen/cell_width"
+                        android:layout_height="@dimen/cell_height"
+                        android:background="@drawable/cell_header_background"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:text="Mon" />
+
+                    <TextView
+                        android:layout_width="@dimen/cell_width"
+                        android:layout_height="@dimen/cell_height"
+                        android:background="@drawable/cell_header_background"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:text="Tue" />
+
+                    <TextView
+                        android:layout_width="@dimen/cell_width"
+                        android:layout_height="@dimen/cell_height"
+                        android:background="@drawable/cell_header_background"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:text="Wed" />
+
+                    <TextView
+                        android:layout_width="@dimen/cell_width"
+                        android:layout_height="@dimen/cell_height"
+                        android:background="@drawable/cell_header_background"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:text="Thu" />
+
+                    <TextView
+                        android:layout_width="@dimen/cell_width"
+                        android:layout_height="@dimen/cell_height"
+                        android:background="@drawable/cell_header_background"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:text="Fri" />
+
+                    <TextView
+                        android:layout_width="@dimen/cell_width"
+                        android:layout_height="@dimen/cell_height"
+                        android:background="@drawable/cell_header_background"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:text="Sat" />
+
+                </LinearLayout>
+
+                <!--<ScrollView-->
                 <!--android:id="@+id/scroll_vertical"-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
@@ -101,166 +126,162 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/days_container">
+                    android:layout_below="@+id/days_container"
+                    android:orientation="horizontal">
 
 
                     <!--lbl hours-->
                     <!--<LinearLayout-->
-                        <!--android:id="@+id/hours_container"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:orientation="vertical">-->
+                    <!--android:id="@+id/hours_container"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical">-->
 
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="00:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="01:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="02:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="03:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="04:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="05:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="06:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="07:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="08:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="09:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="10:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="11:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="12:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="13:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="14:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="15:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="16:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="17:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="18:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="19:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="20:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="21:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="22:00"/>-->
-                        <!--<TextView-->
-                            <!--android:layout_width="@dimen/cell_width"-->
-                            <!--android:layout_height="@dimen/cell_height"-->
-                            <!--android:background="@drawable/cell_background"-->
-                            <!--android:text="23:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="00:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="01:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="02:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="03:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="04:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="05:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="06:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="07:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="08:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="09:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="10:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="11:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="12:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="13:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="14:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="15:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="16:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="17:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="18:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="19:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="20:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="21:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="22:00"/>-->
+                    <!--<TextView-->
+                    <!--android:layout_width="@dimen/cell_width"-->
+                    <!--android:layout_height="@dimen/cell_height"-->
+                    <!--android:background="@drawable/cell_background"-->
+                    <!--android:text="23:00"/>-->
 
                     <!--</LinearLayout>-->
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_grid"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="wrap_content"/>
 
                 </RelativeLayout>
 
 
+                <!--</ScrollView>-->
 
-            <!--</ScrollView>-->
+            </RelativeLayout>
 
-        </RelativeLayout>
-
-
-    </com.example.velev.dragselection.gridview.CustomHorizontalScrollView>
+        </com.example.velev.dragselection.gridview.CustomHorizontalScrollView>
 
 
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_save"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
-
-</RelativeLayout>
-
-</android.support.constraint.ConstraintLayout>
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_save" />
+</android.support.design.widget.CoordinatorLayout>

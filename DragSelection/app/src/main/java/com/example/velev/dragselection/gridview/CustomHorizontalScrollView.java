@@ -12,14 +12,14 @@ import android.widget.HorizontalScrollView;
 public class CustomHorizontalScrollView extends HorizontalScrollView {
 
 
-    private boolean enableScrolling = true;
+    private boolean mEnableScrolling = true;
 
     public boolean isEnableScrolling() {
-        return enableScrolling;
+        return mEnableScrolling;
     }
 
     public void setEnableScrolling(boolean enableScrolling) {
-        this.enableScrolling = enableScrolling;
+        mEnableScrolling = enableScrolling;
     }
 
     public CustomHorizontalScrollView(Context context, AttributeSet attrs, int defStyle) {

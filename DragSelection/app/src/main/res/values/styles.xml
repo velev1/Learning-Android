@@ -9,4 +9,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    
+    <style name="btn_clear">
+        <item name="android:background">@drawable/ripple_btn_clear</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

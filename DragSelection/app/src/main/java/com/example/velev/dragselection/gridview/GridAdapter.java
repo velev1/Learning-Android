@@ -19,22 +19,22 @@ import java.util.List;
 
 public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridHolder> {
 
-    private OnLongPressSelectedItem listener;
-    private List<String> data;
-    private boolean[] isSelected;
+    private OnLongPressSelectedItem mListener;
+    private List<String> mData;
+    private boolean[] mIsSelected;
     private Context mContext;
 
     public GridAdapter(List<String> data, OnLongPressSelectedItem listener, Context context) {
         if (data == null) {
-            this.data = new ArrayList<>();
-            isSelected = new boolean[0];
+            mData = new ArrayList<>();
+            mIsSelected = new boolean[0];
         } else {
-            this.data = data;
-            isSelected = new boolean[data.size()];
+            mData = data;
+            mIsSelected = new boolean[data.size()];
         }
 
-        this.listener = listener;
-        this.mContext = context;
+        mListener = listener;
+        mContext = context;
     }
 
     @Override
@@ -48,22 +48,22 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridHolder> {
     @Override
     public void onBindViewHolder(GridHolder holder, int position) {
 
-        if (isSelected[position]) {
+        if (mIsSelected[position]) {
             holder.itemView.setBackgroundResource(R.drawable.cell_background_selected);
             holder.tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.white));
         } else {
             holder.itemView.setBackgroundResource(R.drawable.cell_background);
-            holder.tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.black));
+            holder.tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
         }
 
-        String[] dayAndHour = data.get(position).split(" ");
+        String[] dayAndHour = mData.get(position).split(" ");
         //  holder.tvDay.setText(dayAndHour[0]);
         holder.tvHour.setText(dayAndHour[1]);
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return mData.size();
     }
 
     interface OnLongPressSelectedItem {
@@ -71,12 +71,12 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridHolder> {
     }
 
     public boolean[] getIsSelected() {
-        return this.isSelected;
+        return mIsSelected;
     }
 
     public void select(int position, View view) {
-        if (position > -1 && position < isSelected.length) {
-            isSelected[position] = true;
+        if (position > -1 && position < mIsSelected.length) {
+            mIsSelected[position] = true;
 
             TextView tvHour = (TextView) view.findViewById(R.id.tv_hour);
             tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.white));
@@ -84,24 +84,24 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridHolder> {
     }
 
     public void unSelect(int position) {
-        if (position > -1 && position < isSelected.length) {
-            isSelected[position] = false;
+        if (position > -1 && position < mIsSelected.length) {
+            mIsSelected[position] = false;
             notifyItemChanged(position);
         }
     }
 
     public void unSelect(int position, View view) {
-        if (position > -1 && position < isSelected.length) {
-            isSelected[position] = false;
+        if (position > -1 && position < mIsSelected.length) {
+            mIsSelected[position] = false;
 
             TextView tvHour = (TextView) view.findViewById(R.id.tv_hour);
-            tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.black));
+            tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
         }
     }
 
     public boolean checkIfSelected(int position) {
-        if (position > -1 && position < isSelected.length) {
-            if (isSelected[position]) {
+        if (position > -1 && position < mIsSelected.length) {
+            if (mIsSelected[position]) {
                 return true;
             }
         }
@@ -128,22 +128,22 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridHolder> {
 
         @Override
         public boolean onLongClick(View v) {
-            listener.onLongPressed();
+            mListener.onLongPressed();
             return true;
         }
 
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            if (!isSelected[position]) {
-                isSelected[position] = true;
+            if (!mIsSelected[position]) {
+                mIsSelected[position] = true;
                 v.setBackgroundResource(R.drawable.cell_background_selected);
                 tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.white));
 
             } else {
-                isSelected[position] = false;
+                mIsSelected[position] = false;
                 v.setBackgroundResource(R.drawable.cell_background);
-                tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.black));
+                tvHour.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
             }
         }
     }

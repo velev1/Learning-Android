@@ -16,7 +16,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.velev.dragselection.R;
-import com.example.velev.dragselection.enums.Direction;
+import com.example.velev.dragselection.gridview.enums.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +28,14 @@ import java.util.List;
 public class GridFragment extends Fragment
         implements GridAdapter.OnLongPressSelectedItem {
 
-    private RecyclerView rvHours;
-    private CustomHorizontalScrollView scrollView;
-//    private CustomVerticalScrollView mVerticalScrollView;
+    private static final int DAYS_OF_WEEK_COUNT = 7;
+
+    private RecyclerView mRvHours;
+    private CustomHorizontalScrollView mHorizontalScroll;
     private Switch mSwitch;
     private FloatingActionButton mFab;
-    private GridAdapter adapter;
-    private int currentPosition;
+    private GridAdapter mAdapter;
+    private int mCurrentPosition;
     private Button mBtnClear;
 
     private float mX;
@@ -42,41 +43,41 @@ public class GridFragment extends Fragment
     private Direction mDirection;
     private boolean mInitialVisibilityStateFAB = true;
 
-//    private boolean isChecked = false;
-//    private Switch mToggle;
-
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setHasOptionsMenu(true);
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         View view = inflater.inflate(R.layout.fragment_grid, container, false);
 
+        initUi(view);
 
+        return view;
+    }
 
+    @Override
+    public void onLongPressed() {
+
+    }
+
+    private void initUi(View view) {
         mSwitch = (Switch) view.findViewById(R.id.sw_select_mode);
-        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    Toast.makeText(getContext(), "ON", Toast.LENGTH_SHORT).show();
-                    onSelectModeOn();
-                } else {
-                    // The toggle is disabled
-                    Toast.makeText(getContext(), "OFF", Toast.LENGTH_SHORT).show();
-                    rvHours.setOnTouchListener(null);
-                    scrollView.setEnableScrolling(true);
-//                    mVerticalScrollView.setEnableScrolling(true);
-                }
-            }
-        });
+        onSwitchButtonSwitched();
 
+        mHorizontalScroll = (CustomHorizontalScrollView) view.findViewById(R.id.sv_horizontal);
 
+        mRvHours = (RecyclerView) view.findViewById(R.id.rv_grid);
+        mRvHours.setLayoutManager(new GridLayoutManager(getActivity(), DAYS_OF_WEEK_COUNT));
+        mAdapter = new GridAdapter(createData(), this, getContext());
+        mRvHours.setAdapter(mAdapter);
+
+        mBtnClear = (Button) view.findViewById(R.id.btn_clear);
+        clearGrid();
+
+        mFab = (FloatingActionButton) view.findViewById(R.id.fab_save);
+        onScroll();
+    }
+
+    private List<String> createData() {
         List<String> data = new ArrayList<>();
         int length = 7 * 24;
         int counter = 0;
@@ -89,36 +90,31 @@ public class GridFragment extends Fragment
             }
         }
 
-        scrollView = (CustomHorizontalScrollView) view.findViewById(R.id.sv_horizontal);
-//        mVerticalScrollView = (CustomVerticalScrollView) view.findViewById(R.id.scroll_vertical);
-
-        rvHours = (RecyclerView) view.findViewById(R.id.rv_grid);
-        int numberOfColumns = 7;
-        rvHours.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));
-        adapter = new GridAdapter(data, this, getContext());
-        rvHours.setAdapter(adapter);
-
-        mBtnClear = (Button) view.findViewById(R.id.btn_clear);
-        clearGrid();
-
-        mFab =(FloatingActionButton) view.findViewById(R.id.fab_save);
-        onScroll();
-
-        return view;
+        return data;
     }
 
-    @Override
-    public void onLongPressed() {
-
+    private void onSwitchButtonSwitched() {
+        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Toast.makeText(getContext(), "ON", Toast.LENGTH_SHORT).show();
+                    onSelectModeOn();
+                } else {
+                    // The toggle is disabled
+                    Toast.makeText(getContext(), "OFF", Toast.LENGTH_SHORT).show();
+                    mRvHours.setOnTouchListener(null);
+                    mHorizontalScroll.setEnableScrolling(true);
+                }
+            }
+        });
     }
 
     private void onSelectModeOn() {
         mDirection = Direction.NONE;
 
-        scrollView.setEnableScrolling(false);
-//        mVerticalScrollView.setEnableScrolling(false);
+        mHorizontalScroll.setEnableScrolling(false);
 
-        rvHours.setOnTouchListener(new View.OnTouchListener() {
+        mRvHours.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
@@ -127,26 +123,25 @@ public class GridFragment extends Fragment
                 switch (action) {
 
                     case (MotionEvent.ACTION_MOVE):
-                        View view = rvHours.findChildViewUnder(event.getX(), event.getY());
+                        View view = mRvHours.findChildViewUnder(event.getX(), event.getY());
 
                         if (view != null) {
-                            int position = rvHours.getChildAdapterPosition(view);
-
+                            int position = mRvHours.getChildAdapterPosition(view);
                             boolean isToggleSelectionON = detectDirection(event.getX(), event.getY());
 
                             if (isToggleSelectionON) {
-                                adapter.unSelect(position, view);
+                                mAdapter.unSelect(position, view);
                                 view.setBackgroundResource(R.drawable.cell_background);
                             }
-//                            Toast.makeText(getContext(), String.valueOf(mDirection), Toast.LENGTH_SHORT).show();
-                            if (position != currentPosition) {
-                                currentPosition = position;
 
-                                if (adapter.checkIfSelected(position)) {
-                                    adapter.unSelect(position, view);
+                            if (position != mCurrentPosition) {
+                                mCurrentPosition = position;
+
+                                if (mAdapter.checkIfSelected(position)) {
+                                    mAdapter.unSelect(position, view);
                                     view.setBackgroundResource(R.drawable.cell_background);
                                 } else {
-                                    adapter.select(position, view);
+                                    mAdapter.select(position, view);
                                     view.setBackgroundResource(R.drawable.cell_background_selected);
                                 }
                             }
@@ -163,82 +158,9 @@ public class GridFragment extends Fragment
         });
     }
 
+    private void onScroll() {
 
-    //    @Override
-//    public void onLongPressed() {
-//        // reset the coordinates and direction
-////        mX = -1;
-////        mY = -1;
-//        mDirection = Direction.NONE;
-//
-//        scrollView.setEnableScrolling(false);
-//
-//        rvHours.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//
-//                int action = MotionEventCompat.getActionMasked(event);
-//
-//                switch (action) {
-////                    case (MotionEvent.ACTION_DOWN):
-////                        // TODO think about initialise mX and mY here...
-////                        mX = event.getX();
-////                        mY = event.getY();
-////                        Toast.makeText(getContext(), "x= " + mX +" y= " + mY, Toast.LENGTH_SHORT).show();
-////                        return true;
-//                    case (MotionEvent.ACTION_MOVE):
-//
-//                        // if first time after longPress
-////                        if (mX == -1 && mY == -1) {
-////                            mX = event.getX();
-////                            mY = event.getY();
-////                        }
-//
-//                        View view = rvHours.findChildViewUnder(event.getX(), event.getY());
-//
-//                        if (view != null) {
-//                            int position = rvHours.getChildAdapterPosition(view);
-//
-//                            boolean isToggleSelectionON = detectDirection(event.getX(), event.getY());
-//
-//                            if (isToggleSelectionON) {
-//                                adapter.unSelect(position);
-//                                view.setBackgroundResource(R.drawable.cell_background);
-//                            }
-////                            Toast.makeText(getContext(), String.valueOf(mDirection), Toast.LENGTH_SHORT).show();
-//                            if (position != currentPosition) {
-//                                currentPosition = position;
-//
-//                                if (adapter.checkIfSelected(position)) {
-//                                    adapter.unSelect(position);
-//                                    view.setBackgroundResource(R.drawable.cell_background);
-//                                } else {
-//                                    adapter.select(position);
-//                                    view.setBackgroundResource(R.drawable.cell_background_selected);
-//                                }
-//                            }
-//                        }
-//                        // update the values
-//                        mX = event.getX();
-//                        mY = event.getY();
-//
-//                        return true;
-//
-//                    case (MotionEvent.ACTION_UP):
-//                        rvHours.setOnTouchListener(null);
-//                        scrollView.setEnableScrolling(true);
-//
-//                        return true;
-//                }
-//
-//                return true;
-//            }
-//        });
-//    }
-
-    private void onScroll(){
-
-        rvHours.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRvHours.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -247,7 +169,7 @@ public class GridFragment extends Fragment
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if(!mInitialVisibilityStateFAB) {
+                if (!mInitialVisibilityStateFAB) {
                     mFab.hide();
                 }
 
@@ -314,7 +236,7 @@ public class GridFragment extends Fragment
     private String createStringHour(int hour) {
 
         if (hour < 10) {
-            return  "0" + hour + ":00";
+            return "0" + hour + ":00";
         } else {
             return hour + ":00";
         }
@@ -322,13 +244,13 @@ public class GridFragment extends Fragment
 
     private void clearGrid() {
 
-        mBtnClear.setOnClickListener(new View.OnClickListener(){
+        mBtnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean[] cellStatus = adapter.getIsSelected();
+                boolean[] cellStatus = mAdapter.getIsSelected();
                 for (int i = 0; i < cellStatus.length; i++) {
-                    if (cellStatus[i]){
-                        adapter.unSelect(i);
+                    if (cellStatus[i]) {
+                        mAdapter.unSelect(i);
                     }
                 }
             }
