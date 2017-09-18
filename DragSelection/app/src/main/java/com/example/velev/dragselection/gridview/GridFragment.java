@@ -1,11 +1,13 @@
 package com.example.velev.dragselection.gridview;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,9 +31,10 @@ public class GridFragment extends Fragment
         implements GridAdapter.OnLongPressSelectedItem {
 
     private static final int DAYS_OF_WEEK_COUNT = 7;
+    private static final int HOURS_IN_WEEK_COUNT = 168;
 
     private RecyclerView mRvHours;
-    private CustomHorizontalScrollView mHorizontalScroll;
+//    private CustomHorizontalScrollView mHorizontalScroll;
     private Switch mSwitch;
     private FloatingActionButton mFab;
     private GridAdapter mAdapter;
@@ -60,14 +63,22 @@ public class GridFragment extends Fragment
     }
 
     private void initUi(View view) {
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int screenWidth = size.x;
+        int cellWidth = screenWidth / DAYS_OF_WEEK_COUNT;
+
+        setHeaderLabelsWidth(view, cellWidth);
+
         mSwitch = (Switch) view.findViewById(R.id.sw_select_mode);
         onSwitchButtonSwitched();
 
-        mHorizontalScroll = (CustomHorizontalScrollView) view.findViewById(R.id.sv_horizontal);
+//        mHorizontalScroll = (CustomHorizontalScrollView) view.findViewById(R.id.sv_horizontal);
 
         mRvHours = (RecyclerView) view.findViewById(R.id.rv_grid);
         mRvHours.setLayoutManager(new GridLayoutManager(getActivity(), DAYS_OF_WEEK_COUNT));
-        mAdapter = new GridAdapter(createData(), this, getContext());
+        mAdapter = new GridAdapter(createData(), this, getContext(), cellWidth);
         mRvHours.setAdapter(mAdapter);
 
         mBtnClear = (Button) view.findViewById(R.id.btn_clear);
@@ -79,14 +90,14 @@ public class GridFragment extends Fragment
 
     private List<String> createData() {
         List<String> data = new ArrayList<>();
-        int length = 7 * 24;
-        int counter = 0;
-        for (int i = 0; i < length; i++) {
+
+        int currentHour = 0;
+        for (int i = 0; i < HOURS_IN_WEEK_COUNT; i++) {
 
             String day = getDayOfWeekByIndex(i % 7);
-            data.add(day + " " + createStringHour(counter));
+            data.add(day + " " + createStringHour(currentHour));
             if ((i + 1) % 7 == 0) {
-                counter++;
+                currentHour++;
             }
         }
 
@@ -103,7 +114,7 @@ public class GridFragment extends Fragment
                     // The toggle is disabled
                     Toast.makeText(getContext(), "OFF", Toast.LENGTH_SHORT).show();
                     mRvHours.setOnTouchListener(null);
-                    mHorizontalScroll.setEnableScrolling(true);
+//                    mHorizontalScroll.setEnableScrolling(true);
                 }
             }
         });
@@ -112,7 +123,7 @@ public class GridFragment extends Fragment
     private void onSelectModeOn() {
         mDirection = Direction.NONE;
 
-        mHorizontalScroll.setEnableScrolling(false);
+//        mHorizontalScroll.setEnableScrolling(false);
 
         mRvHours.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -255,5 +266,22 @@ public class GridFragment extends Fragment
                 }
             }
         });
+    }
+
+    private void setHeaderLabelsWidth(View view, int cellWidth) {
+        View sun = view.findViewById(R.id.lbl_sun);
+        sun.getLayoutParams().width = cellWidth;
+        View mon = view.findViewById(R.id.lbl_mon);
+        mon.getLayoutParams().width = cellWidth;
+        View tue = view.findViewById(R.id.lbl_tue);
+        tue.getLayoutParams().width = cellWidth;
+        View wed = view.findViewById(R.id.lbl_wed);
+        wed.getLayoutParams().width = cellWidth;
+        View thu = view.findViewById(R.id.lbl_thu);
+        thu.getLayoutParams().width = cellWidth;
+        View fri = view.findViewById(R.id.lbl_fri);
+        fri.getLayoutParams().width = cellWidth;
+        View sat = view.findViewById(R.id.lbl_sat);
+        sat.getLayoutParams().width = cellWidth;
     }
 }

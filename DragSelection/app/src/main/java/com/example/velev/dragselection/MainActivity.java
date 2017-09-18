@@ -13,10 +13,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GridFragment gridFragment = new GridFragment();
-
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_holder, gridFragment).commit();
+        if(savedInstanceState == null) {
+            GridFragment gridFragment = new GridFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_holder, gridFragment).commit();
+        }
     }
 
 }

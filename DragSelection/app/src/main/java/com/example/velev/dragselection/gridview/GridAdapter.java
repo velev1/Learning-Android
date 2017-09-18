@@ -23,8 +23,9 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridHolder> {
     private List<String> mData;
     private boolean[] mIsSelected;
     private Context mContext;
+    private int mCellWidth;
 
-    public GridAdapter(List<String> data, OnLongPressSelectedItem listener, Context context) {
+    public GridAdapter(List<String> data, OnLongPressSelectedItem listener, Context context, int cellWidth) {
         if (data == null) {
             mData = new ArrayList<>();
             mIsSelected = new boolean[0];
@@ -35,6 +36,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridHolder> {
 
         mListener = listener;
         mContext = context;
+        mCellWidth = cellWidth;
     }
 
     @Override
@@ -118,6 +120,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridHolder> {
             super(view);
 
             this.tvHour = (TextView) view.findViewById(R.id.tv_hour);
+            view.getLayoutParams().width = mCellWidth;
 
             // attach the long click
             view.setOnLongClickListener(this);
