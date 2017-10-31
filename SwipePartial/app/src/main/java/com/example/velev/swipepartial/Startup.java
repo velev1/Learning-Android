@@ -1,5 +1,7 @@
 package com.example.velev.swipepartial;
 
+import android.graphics.Paint;
+import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +17,7 @@ import java.util.List;
 
 public class Startup extends AppCompatActivity {
 
-    private static final int BUTTON_WIDTH = 120;
+    private static final float FONT_SIZE = 16f;
 
     private RecyclerView rvItems;
     private ItemAdapter adapter;
@@ -38,7 +40,22 @@ public class Startup extends AppCompatActivity {
     }
 
     private void onSwipe() {
-        SwipeHelper swipeHelper = new SwipeHelper(this, rvItems, BUTTON_WIDTH) {
+
+        float size = FONT_SIZE;
+        try {
+            float fontScale = Settings.System.getFloat(this.getContentResolver(), Settings.System.FONT_SCALE);
+            size = FONT_SIZE * fontScale;
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+        final float textFontSize = size;
+
+        Paint paint = new Paint();
+        paint.setTextSize(textFontSize);
+        int padding = 20;
+        int btnDeleteWidth = (int)(paint.measureText(this.getResources().getString(R.string.delete)) + padding);
+
+        SwipeHelper swipeHelper = new SwipeHelper(this, rvItems, btnDeleteWidth) {
 
             @Override
             public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder)   {
@@ -51,12 +68,12 @@ public class Startup extends AppCompatActivity {
                 return super.getSwipeDirs(recyclerView, viewHolder);
             }
 
-
             @Override
             public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
                 underlayButtons.add(new SwipeHelper.UnderlayButton(
-                        "Delete",
-                        18f ,
+                        Startup.this,
+                        Startup.this.getResources().getString(R.string.delete),
+                        textFontSize,
                         ContextCompat.getColor(Startup.this, R.color.white),
                         ContextCompat.getColor(Startup.this, R.color.colorAccent),
                         0,

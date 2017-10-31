@@ -57,20 +57,23 @@ public abstract  class SwipeHelper extends ItemTouchHelper.SimpleCallback{
             Point point = new Point((int) e.getRawX(), (int) e.getRawY());
 
             RecyclerView.ViewHolder swipedViewHolder = mRecyclerView.findViewHolderForAdapterPosition(mSwipedPos);
-            View swipedItem = swipedViewHolder.itemView;
-            Rect rect = new Rect();
-            swipedItem.getGlobalVisibleRect(rect);
 
-            if (e.getAction() == MotionEvent.ACTION_DOWN || e.getAction() == MotionEvent.ACTION_UP ||e.getAction() == MotionEvent.ACTION_MOVE) {
-                if (rect.top < point.y && rect.bottom > point.y) {
-                    mGestureDetector.onTouchEvent(e);
-                }
-                else {
-                    mRecoverQueue.add(mSwipedPos);
-                    mSwipedPos = -1;
-                    recoverSwipedItem();
+            if (swipedViewHolder != null) {
+                View swipedItem = swipedViewHolder.itemView;
+                Rect rect = new Rect();
+                swipedItem.getGlobalVisibleRect(rect);
+
+                if (e.getAction() == MotionEvent.ACTION_DOWN || e.getAction() == MotionEvent.ACTION_UP || e.getAction() == MotionEvent.ACTION_MOVE) {
+                    if (rect.top < point.y && rect.bottom > point.y) {
+                        mGestureDetector.onTouchEvent(e);
+                    } else {
+                        mRecoverQueue.add(mSwipedPos);
+                        mSwipedPos = -1;
+                        recoverSwipedItem();
+                    }
                 }
             }
+
             return false;
         }
     };
@@ -81,7 +84,7 @@ public abstract  class SwipeHelper extends ItemTouchHelper.SimpleCallback{
         mGestureDetector = new GestureDetector(context, mGestureListener);
         mRecyclerView = recyclerView;
         mRecyclerView.setOnTouchListener(mOnTouchListener);
-        mButtonWidth = buttonWidth;
+        mButtonWidth =  (int) (buttonWidth * context.getResources().getDisplayMetrics().density);
         mButtonsBuffer = new HashMap<>();
         mRecoverQueue = new LinkedList<Integer>(){
             @Override
@@ -223,14 +226,15 @@ public abstract  class SwipeHelper extends ItemTouchHelper.SimpleCallback{
         private RectF mClickRegion;
         private UnderlayButtonClickListener mClickListener;
 
-        public UnderlayButton(String text,
+        public UnderlayButton(Context context,
+                              String text,
                               float textSize,
                               int textColor ,
                               int backgroundColor,
                               int imageResId,
                               UnderlayButtonClickListener clickListener) {
             mText = text;
-            mTextSize = textSize;
+            mTextSize = textSize * context.getResources().getDisplayMetrics().density;
             mImageResId = imageResId;
             mTextColor = textColor;
             mBackgroundColor = backgroundColor;
