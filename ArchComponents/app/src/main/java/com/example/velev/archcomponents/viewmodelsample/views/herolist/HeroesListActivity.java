@@ -21,10 +21,10 @@ import java.util.List;
 
 public class HeroesListActivity extends AppCompatActivity {
 
-    private ItemsViewModel mItemsViewModel;
+    private HeroesViewModel mHeroesViewModel;
     private List<Hero> mData;
     private RecyclerView mRvItems;
-    private ItemsAdapter adapter;
+    private HeroAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class HeroesListActivity extends AppCompatActivity {
 
         mData = new ArrayList<>();
 
-        adapter = new ItemsAdapter(mData);
+        adapter = new HeroAdapter(mData);
         mRvItems =  findViewById(R.id.rv_items);
         mRvItems.setAdapter(adapter);
 
@@ -42,7 +42,7 @@ public class HeroesListActivity extends AppCompatActivity {
 
         mRvItems.setItemAnimator(new DefaultItemAnimator());
 
-        mItemsViewModel = ViewModelProviders.of(this).get(ItemsViewModel.class);
+        mHeroesViewModel = ViewModelProviders.of(this).get(HeroesViewModel.class);
 
         subscribe();
     }
@@ -55,6 +55,6 @@ public class HeroesListActivity extends AppCompatActivity {
             }
         };
 
-        mItemsViewModel.getItem().observe(this, itemsObserver);
+        mHeroesViewModel.getItem().observe(this, itemsObserver);
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
  * Created by velev on 15.1.2018 г..
  */
 
-public class ItemsViewModel extends ViewModel {
+public class HeroesViewModel extends ViewModel {
     private MutableLiveData<List<Hero>> mData = new MutableLiveData<>();
     private HeroDataProvider mDataProvider;
 

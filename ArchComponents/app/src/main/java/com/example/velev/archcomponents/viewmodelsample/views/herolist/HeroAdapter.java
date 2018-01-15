@@ -16,11 +16,11 @@ import java.util.List;
  * Created by velev on 15.1.2018 г..
  */
 
-public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemHolder> {
+public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ItemHolder> {
 
     private List<Hero> mHeroes;
 
-    public ItemsAdapter(List<Hero> heroes) {
+    public HeroAdapter(List<Hero> heroes) {
         if (heroes != null) {
             mHeroes = heroes;
         } else {
