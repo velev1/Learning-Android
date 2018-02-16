@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.velev.archcomponents.R;
-import com.example.velev.archcomponents.viewmodelsample.data.models.Hero;
+import com.example.velev.archcomponents.viewmodelsample.data.entity.HeroEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +18,17 @@ import java.util.List;
 
 public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ItemHolder> {
 
-    private List<Hero> mHeroes;
+    private List<HeroEntity> mHeroes;
+    private ItemClickListener mListener;
 
-    public HeroAdapter(List<Hero> heroes) {
+    public HeroAdapter(List<HeroEntity> heroes, ItemClickListener listener) {
         if (heroes != null) {
             mHeroes = heroes;
         } else {
             mHeroes = new ArrayList<>();
         }
+
+        mListener = listener;
     }
 
     @Override
@@ -46,13 +49,18 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ItemHolder> {
         return mHeroes.size();
     }
 
-    // TODO fix this
-    public void updateData(List<Hero> data) {
-        mHeroes = data;
+    public void updateData(List<HeroEntity> data) {
+        mHeroes.clear();
+        mHeroes.addAll(data);
         notifyDataSetChanged();
     }
 
-    public class ItemHolder extends RecyclerView.ViewHolder{
+    interface ItemClickListener {
+        void onItemClick(HeroEntity heroEntity);
+    }
+
+
+    public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvName;
         private TextView tvURL;
 
@@ -61,6 +69,14 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ItemHolder> {
 
             tvName = view.findViewById(R.id.tv_item);
             tvURL = view.findViewById(R.id.tv_url);
+
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int positionClicked = getAdapterPosition();
+            mListener.onItemClick(mHeroes.get(positionClicked));
         }
     }
 }

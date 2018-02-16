@@ -5,5 +5,19 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="black">#000</color>
+    <color name="white">#fff</color>
 
+    <color name="accept_dark">#2d7a3e</color>
+    <color name="accept">#499628</color>
+    <color name="accept_light">#3cd85e</color>
+
+    <color name="danger_dark">#771111</color>
+    <color name="danger">#cc3420</color>
+    <color name="danger_light">#f22121</color>
+
+    <color name="info_text">#4cace0</color>
+
+    <color name="warning_dark">#e8ab12</color>
+    <color name="warning">#ffc321</color>
+    <color name="warning_light">#ffe60c</color>
 </resources>

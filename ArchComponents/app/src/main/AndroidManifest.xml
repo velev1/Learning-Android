@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".viewmodelsample.views.herolist.HeroesListActivity"></activity>
+        <activity android:name=".viewmodelsample.views.herolist.HeroesListActivity" />
+        <activity android:name=".viewmodelsample.views.herodetails.HeroDetailsActivity"></activity>
     </application>
 
 </manifest>

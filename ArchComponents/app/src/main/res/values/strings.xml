@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ArchComponents</string>
+    <string name="add_hero">Add Hero</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="delete_this_hero">Delete this hero?</string>
+    <string name="update_hero">Update hero</string>
 </resources>

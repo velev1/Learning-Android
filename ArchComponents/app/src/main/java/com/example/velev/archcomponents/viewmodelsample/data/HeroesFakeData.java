@@ -1,7 +1,9 @@
 package com.example.velev.archcomponents.viewmodelsample.data;
 
-import com.example.velev.archcomponents.viewmodelsample.contracts.HeroDataProvider;
-import com.example.velev.archcomponents.viewmodelsample.data.models.Hero;
+import android.arch.lifecycle.LiveData;
+
+import com.example.velev.archcomponents.viewmodelsample.data.dao.HeroDao;
+import com.example.velev.archcomponents.viewmodelsample.data.entity.HeroEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +12,8 @@ import java.util.List;
  * Created by velev on 15.1.2018 г..
  */
 
-public class HeroesFakeData implements HeroDataProvider {
-    private List<Hero> mHeroes;
+public class HeroesFakeData implements HeroDao {
+    private List<HeroEntity> mHeroes;
 
     public HeroesFakeData() {
         mHeroes = new ArrayList<>();
@@ -21,21 +23,41 @@ public class HeroesFakeData implements HeroDataProvider {
         }
     }
 
-    @Override
-    public List<Hero> getHeroes() {
+
+    public List<HeroEntity> getHeroes() {
         return mHeroes;
     }
 
-    private List<Hero> loadHeroes() {
-        List<Hero> heroes = new ArrayList<>();
+    private List<HeroEntity> loadHeroes() {
+        List<HeroEntity> heroes = new ArrayList<>();
 
-        heroes.add(new Hero("batman", "http..."));
-        heroes.add(new Hero("superman", "http..."));
-        heroes.add(new Hero("catwoman", "http..."));
-        heroes.add(new Hero("spiderman", "http..."));
-        heroes.add(new Hero("punisher", "http..."));
+        heroes.add(new HeroEntity("batman", "http..."));
+        heroes.add(new HeroEntity("superman", "http..."));
+        heroes.add(new HeroEntity("catwoman", "http..."));
+        heroes.add(new HeroEntity("spiderman", "http..."));
+        heroes.add(new HeroEntity("punisher", "http..."));
 
         return heroes;
+    }
+
+    @Override
+    public LiveData<List<HeroEntity>> loadAllHeroes() {
+        return null;
+    }
+
+    @Override
+    public void insertHero(HeroEntity hero) {
+
+    }
+
+    @Override
+    public void updateHero(HeroEntity hero) {
+
+    }
+
+    @Override
+    public void deleteHero(HeroEntity hero) {
+
     }
 }
 

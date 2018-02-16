@@ -4,29 +4,12 @@ package com.example.velev.archcomponents.viewmodelsample.data.models;
  * Created by velev on 15.1.2018 г..
  */
 
-public class Hero {
-    private String name;
-    private String imgURL;
+public interface Hero {
 
+    int getId();
 
-    public Hero(String name, String imgURL) {
-        setName(name);
-        setImgURL(imgURL);
-    }
+    String getName();
 
-    public String getName() {
-        return this.name;
-    }
+    String getImgURL();
 
-    private void setName(String name) {
-        this.name = name;
-    }
-
-    public String getImgURL() {
-        return this.imgURL;
-    }
-
-    private void setImgURL(String imgURL) {
-        this.imgURL = imgURL;
-    }
 }

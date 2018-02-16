@@ -3,10 +3,11 @@ package com.example.velev.archcomponents.viewmodelsample.views.herolist;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.Context;
 
-import com.example.velev.archcomponents.viewmodelsample.contracts.HeroDataProvider;
-import com.example.velev.archcomponents.viewmodelsample.data.HeroesFakeData;
-import com.example.velev.archcomponents.viewmodelsample.data.models.Hero;
+import com.example.velev.archcomponents.viewmodelsample.data.AppDatabase;
+import com.example.velev.archcomponents.viewmodelsample.data.DataRepository;
+import com.example.velev.archcomponents.viewmodelsample.data.entity.HeroEntity;
 
 import java.util.List;
 
@@ -15,30 +16,27 @@ import java.util.List;
  */
 
 public class HeroesViewModel extends ViewModel {
-    private MutableLiveData<List<Hero>> mData = new MutableLiveData<>();
-    private HeroDataProvider mDataProvider;
 
+    private LiveData<List<HeroEntity>> mData = new MutableLiveData<>();
+    private AppDatabase mDb;
+    private DataRepository dataRepository;
 
-    public LiveData<List<Hero>> getItem() {
-        mDataProvider = new HeroesFakeData();
-        final List<Hero> heroes = mDataProvider.getHeroes();
+    public LiveData<List<HeroEntity>> getItem(final Context context) {
+        mDb = AppDatabase.getDatabase(context.getApplicationContext());
+        dataRepository = DataRepository.getInstance(mDb);
 
-        // simulate network delay
-        new Thread() {
+        mData = dataRepository.getHeroes();
+        return mData;
+    }
+
+    public void insertHero(HeroEntity hero) {
+        final HeroEntity heroEntity = hero;
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                mData.postValue(heroes);
+                dataRepository.insertHero(heroEntity);
             }
-
-        }.start();
-
-        return mData;
+        }).start();
     }
 }
 

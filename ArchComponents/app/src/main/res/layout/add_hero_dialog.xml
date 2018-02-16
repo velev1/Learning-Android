@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="24dp"
+        android:text="@string/add_hero" />
+
+    <EditText
+        android:id="@+id/et_heroname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tittle"
+        android:layout_margin="16dp" />
+
+    <EditText
+        android:id="@+id/et_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_heroname"
+        android:layout_margin="16dp" />
+
+    <TextView
+        android:id="@+id/cancel"
+        style="@style/warning_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_url"
+        android:layout_margin="16dp"
+        android:text="@string/cancel" />
+
+    <TextView
+        android:id="@+id/save"
+        style="@style/accept_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/et_url"
+        android:layout_margin="16dp"
+        android:text="@string/save" />
+
+
+</RelativeLayout>
