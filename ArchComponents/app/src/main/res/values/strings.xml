@@ -7,4 +7,6 @@
     <string name="delete">Delete</string>
     <string name="delete_this_hero">Delete this hero?</string>
     <string name="update_hero">Update hero</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

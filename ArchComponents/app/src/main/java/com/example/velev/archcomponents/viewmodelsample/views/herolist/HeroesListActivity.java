@@ -58,7 +58,7 @@ public class HeroesListActivity extends AppCompatActivity implements HeroAdapter
 
         mData = new ArrayList<>();
 
-        adapter = new HeroAdapter(mData, this);
+        adapter = new HeroAdapter(mData, this, getApplicationContext());
         mRvItems = findViewById(R.id.rv_items);
         mRvItems.setAdapter(adapter);
 

@@ -9,11 +9,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.velev.archcomponents.R;
 import com.example.velev.archcomponents.viewmodelsample.data.entity.HeroEntity;
 import com.example.velev.archcomponents.viewmodelsample.views.herolist.HeroesListActivity;
+import com.squareup.picasso.Picasso;
 
 public class HeroDetailsActivity extends AppCompatActivity {
     private static final String HERO = "HERO";
@@ -34,13 +36,8 @@ public class HeroDetailsActivity extends AppCompatActivity {
 
         mHero =  (HeroEntity) getIntent().getSerializableExtra(HERO);
 
-//        TextView tvHeroName = findViewById(R.id.tv_heroname);
-//        tvHeroName.setText(mHero.getName());
-//
-//        TextView tvUrl = findViewById(R.id.tv_url);
-//        tvUrl.setText(mHero.getImgURL());
-
-        setDetails();
+        setHeroName();
+        loadImg();
 
         Button btnDelete = findViewById(R.id.btn_delete);
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -63,13 +60,13 @@ public class HeroDetailsActivity extends AppCompatActivity {
         AlertDialog.Builder delDialog = new AlertDialog.Builder(this);
         delDialog.setMessage(R.string.delete_this_hero)
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         onDelete();
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -103,10 +100,8 @@ public class HeroDetailsActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mHero.setName(etHeroName.getText().toString());
-                mHero.setImgURL(etUrl.getText().toString());
                 onUpdate();
-                setDetails();
+                updateActivityState(etHeroName, etUrl);
                 dialog.dismiss();
             }
         });
@@ -127,11 +122,23 @@ public class HeroDetailsActivity extends AppCompatActivity {
         mViewModel.updateHero(mHero, this);
     }
 
-    private void setDetails() {
+    private void setHeroName() {
         TextView tvHeroName = findViewById(R.id.tv_heroname);
         tvHeroName.setText(mHero.getName());
+    }
 
-        TextView tvUrl = findViewById(R.id.tv_url);
-        tvUrl.setText(mHero.getImgURL());
+    private void loadImg() {
+        ImageView image = findViewById(R.id.iv_hero);
+        Picasso.with(this)
+                .load(mHero.getImgURL())
+                .error(R.drawable.ic_action_name)
+                .into(image);
+    }
+
+    private void updateActivityState(TextView etHeroName, TextView etUrl) {
+        mHero.setName(etHeroName.getText().toString());
+        mHero.setImgURL(etUrl.getText().toString());
+        setHeroName();
+        loadImg();
     }
 }
